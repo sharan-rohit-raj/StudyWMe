@@ -10,6 +10,9 @@ import SwiftUI
 struct ForgotPasswordView: View {
     @StateObject var model: ModelData
     @StateObject var authentication = FirebaseAuthentication()
+    var fieldValidators = FieldValidators()
+    @State var showAlertDialog = false
+    @State var errorMessage = ""
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     var body: some View{
         VStack{
@@ -32,7 +35,13 @@ struct ForgotPasswordView: View {
         
             VStack(spacing: 20){
                 CustomTextField(image: "user", placeholderValue: "Email ID", text: $model.passwordResetEmail)
-                Button(action: authentication.forgotPassword, label: {
+                Button(action: {
+                    errorMessage = fieldValidators.validateForgotPassword(withEmail: model.passwordResetEmail)
+                    
+                    if errorMessage != "" {
+                        showAlertDialog = true
+                    }
+                }, label: {
                     Text("Send Email").font(Font.custom("Noteworthy", size: 20).bold())
                         .foregroundColor(Color.white)
                         .padding(.vertical)
@@ -40,7 +49,13 @@ struct ForgotPasswordView: View {
                         .background(Color("DarkPurple"))
                         .clipShape(Capsule())
                     
-                }).padding(.top)
+                })
+                .padding(.top)
+                .alert(isPresented: $showAlertDialog){
+                    Alert(title: Text("Forgot Password Error"),
+                          message: Text(errorMessage),
+                          dismissButton: .default(Text("Okay")))
+                }
             }.padding(.top)
             
             Spacer(minLength: 0)

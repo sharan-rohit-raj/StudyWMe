@@ -6,13 +6,27 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ContentView: View {
+    //User status
+    @AppStorage("log_Status") var userStatus = false
+    
     var body: some View {
-        NavigationView{
-            LoginView(model: ModelData())
-        }.navigationViewStyle(StackNavigationViewStyle()) //Need this for iPad screens to force stack naviagtion view
-        
+        ZStack{
+            if userStatus {
+                VStack(spacing: 25){
+                    Text("Logged in as \(Auth.auth().currentUser?.email ?? "")")
+                    Button("Logout"){
+                        //Logout
+                    }
+                }
+            }else{
+                NavigationView{
+                    LoginView(model: ModelData())
+                }.navigationViewStyle(StackNavigationViewStyle()) //Need this for iPad screens to force stack naviagtion view
+            }
+        }
     }
 }
 

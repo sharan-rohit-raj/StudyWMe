@@ -10,6 +10,9 @@ import SwiftUI
 struct LoginView: View {
     @StateObject var model : ModelData
     @StateObject var authentication = FirebaseAuthentication()
+    var fieldValidators = FieldValidators()
+    @State var errorMessage = ""
+    @State var showAlertDialog = false
     var body: some View{
             VStack{
                 Image("logo")
@@ -30,7 +33,22 @@ struct LoginView: View {
                 VStack(spacing: 20){
                     CustomTextField(image: "user", placeholderValue: "Email ID", text: $model.emailLogin).disableAutocorrection(true)
                     CustomTextField(image: "lock", placeholderValue: "Password", text: $model.passwordLogin)
-                    Button(action: authentication.login, label: {
+                    Button(action: {
+                        errorMessage = fieldValidators.validateLogin(withEmail: model.emailLogin, password: model.passwordLogin)
+                            
+                        if errorMessage != "" {
+                            showAlertDialog = true
+                        }
+                        else{
+                            errorMessage = authentication.login(withEmail: model.emailLogin, andPassword: model.passwordLogin)
+                            if errorMessage != "" {
+                                showAlertDialog = true
+                            }
+                            else{
+                                print("Login Success")
+                            }
+                        }
+                            }, label: {
                         Text("Login").font(Font.custom("Noteworthy", size: 20).bold())
                             .foregroundColor(Color.white)
                             .padding(.vertical)
@@ -38,7 +56,13 @@ struct LoginView: View {
                             .background(Color("DarkPurple"))
                             .clipShape(Capsule())
                         
-                    }).padding(.top)
+                    })
+                    .padding(.top)
+                    .alert(isPresented: $showAlertDialog){
+                        Alert(title: Text("Login Error"),
+                              message: Text(errorMessage),
+                              dismissButton: .default(Text("Okay")))
+                    }
                 }.padding(.top)
                 
                 HStack(spacing: 12){
