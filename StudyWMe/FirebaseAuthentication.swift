@@ -8,42 +8,58 @@
 import Foundation
 import Firebase
 import SwiftUI
+import Combine
 
 class FirebaseAuthentication: ObservableObject{
     
-    //User status
-    @AppStorage("log_Status") var userStatus = false
+    @Published var didChange = PassthroughSubject<FirebaseAuthentication, Never>()
+    @Published var session: Student?{
+        didSet{
+            self.didChange.send(self)
+        }
+    }
+    @Published var handle: AuthStateDidChangeListenerHandle?
     
-    //MARK:- Login Functionality
-    func login(withEmail email: String, andPassword password: String) -> String{
-        var alertMessage = ""
-        print("password: \(password)")
-        Auth.auth().signIn(withEmail: email, password: password){(result, error) in
-            //When error occurs during sign in
-            if error != nil{
-                //Record the error message
-                alertMessage = error!.localizedDescription
-                return
-            }
-            
-            let user = Auth.auth().currentUser
-            
-            if !user!.isEmailVerified{
-                alertMessage = "Please verify your email before logging in"
-                try! Auth.auth().signOut()
-                return
-            }
-            
-            //Set user state as logged in
-            withAnimation{
-                self.userStatus = true
+    //Listen for state changes
+    func listenForChangesInState(){
+        handle = Auth.auth().addStateDidChangeListener{ (auth, user) in
+            if let student = user {
+                //We have an user
+                print("Student: \(student)")
+                self.session = Student(uid: student.uid, email: student.email ?? "", displayName: student.displayName ?? "", phoneNumber: "", age: "")
+            }else{
+                //We dont have an user
+                self.session = nil
             }
         }
-            
-        return alertMessage
+    }
+    //MARK:- Login Functionality
+    func login(withEmail email: String, andPassword password: String, handler: @escaping AuthDataResultCallback){
+        Auth.auth().signIn(withEmail: email, password: password, completion: handler)
     }
     //MARK:- Sign up Functionality
-    func signUp(){}
+    func signUp(withEmail email: String, andPassword password: String, handler: @escaping AuthDataResultCallback){
+        Auth.auth().createUser(withEmail: email, password: password, completion: handler)
+    }
     //MARK:- Forgot password Functionality
-    func forgotPassword(){}
+    func forgotPassword(email: String, handler: @escaping SendPasswordResetCallback){
+        Auth.auth().sendPasswordReset(withEmail: email, completion: handler)
+    }
+    //MARK:- Sign out Functionality
+    func logout()-> Bool{
+        do{
+            try Auth.auth().signOut()
+            self.session = nil
+            return true
+        }
+        catch{
+            return false
+        }
+    }
+    //MARK:- Detach the listener
+    func unbind(){
+        if let handle = handle{
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
+    }
 }

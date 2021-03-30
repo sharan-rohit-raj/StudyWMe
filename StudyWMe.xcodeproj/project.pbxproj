@@ -7,13 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		430B803C2612CC8C00FF8B40 /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B803B2612CC8C00FF8B40 /* KeyboardGuardian.swift */; };
+		430B80672612CF9A00FF8B40 /* GeometryGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80662612CF9A00FF8B40 /* GeometryGetter.swift */; };
+		430B807B2612DCEE00FF8B40 /* FlashCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */; };
+		430B80802612DD3700FF8B40 /* QuizCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B807F2612DD3700FF8B40 /* QuizCardModel.swift */; };
 		4313BF872603143900F6E522 /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313BF862603143900F6E522 /* FirebaseAuthentication.swift */; };
 		4313BF9826031A9000F6E522 /* FieldValidators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313BF9726031A9000F6E522 /* FieldValidators.swift */; };
 		432E467D260191320063D020 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E467C260191320063D020 /* LoginView.swift */; };
 		432E4687260191F30063D020 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E4686260191F30063D020 /* SignUpView.swift */; };
 		432E468C260192330063D020 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E468B260192330063D020 /* ForgotPasswordView.swift */; };
-		432E469C260192A80063D020 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E469B260192A80063D020 /* ModelData.swift */; };
 		432E46AD2601A4160063D020 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E46AC2601A4160063D020 /* CustomTextField.swift */; };
+		435866E326118CF7001E3661 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866E226118CF7001E3661 /* ProfileModel.swift */; };
+		435866E826119711001E3661 /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866E726119711001E3661 /* FeedbackModel.swift */; };
+		435866ED2611A4A4001E3661 /* AboutUsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866EC2611A4A4001E3661 /* AboutUsModel.swift */; };
 		4394F4AA26030C8F00A8E056 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4394F4A926030C8F00A8E056 /* GoogleService-Info.plist */; };
 		43A05F5625FC630F00AA5073 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F5525FC630F00AA5073 /* AppDelegate.swift */; };
 		43A05F5825FC630F00AA5073 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F5725FC630F00AA5073 /* SceneDelegate.swift */; };
@@ -23,6 +29,22 @@
 		43A05F6225FC631000AA5073 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43A05F6025FC631000AA5073 /* LaunchScreen.storyboard */; };
 		43A05F6D25FC631100AA5073 /* StudyWMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F6C25FC631100AA5073 /* StudyWMeTests.swift */; };
 		43A05F7825FC631100AA5073 /* StudyWMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F7725FC631100AA5073 /* StudyWMeUITests.swift */; };
+		43C844F7260D6CCD001957F8 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C844F6260D6CCD001957F8 /* LoaderView.swift */; };
+		43C844FC260D6E79001957F8 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C844FB260D6E79001957F8 /* LoginModel.swift */; };
+		43C84501260D6F6F001957F8 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84500260D6F6F001957F8 /* SignUpModel.swift */; };
+		43C84506260D6F97001957F8 /* ForgotPasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84505260D6F97001957F8 /* ForgotPasswordModel.swift */; };
+		43C84520260D8D35001957F8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C8451F260D8D35001957F8 /* MainView.swift */; };
+		43C84525260D8FAC001957F8 /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84524260D8FAC001957F8 /* Drawer.swift */; };
+		43C8452A260D9509001957F8 /* MenuButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84529260D9509001957F8 /* MenuButtons.swift */; };
+		43C8452F260D95EC001957F8 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C8452E260D95EC001957F8 /* MenuModel.swift */; };
+		43C84544260E629B001957F8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84543260E629B001957F8 /* ProfileView.swift */; };
+		43C84549260E62B7001957F8 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84548260E62B7001957F8 /* FeedbackView.swift */; };
+		43C8454E260E62CB001957F8 /* AboutUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C8454D260E62CB001957F8 /* AboutUsView.swift */; };
+		43C84565260F4A2A001957F8 /* FlashQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84564260F4A2A001957F8 /* FlashQuizView.swift */; };
+		43C8457D260F5598001957F8 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C8457C260F5597001957F8 /* Student.swift */; };
+		43C84585260F8C26001957F8 /* FlashCardCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84584260F8C25001957F8 /* FlashCardCategory.swift */; };
+		43C8458A260F8CA4001957F8 /* QuizCardCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84589260F8CA4001957F8 /* QuizCardCategory.swift */; };
+		43C845A4261152C6001957F8 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C845A3261152C6001957F8 /* CardView.swift */; };
 		57B05F9D4E53D29A130A7346 /* Pods_StudyWMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A157368607D64059BC06658 /* Pods_StudyWMe.framework */; };
 		94239C3B40133C6843701055 /* Pods_StudyWMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D2D95A90F575E27D829747 /* Pods_StudyWMeTests.framework */; };
 		969941493A7AFB763B29954A /* Pods_StudyWMe_StudyWMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B42821FC2D7E319299F7796F /* Pods_StudyWMe_StudyWMeUITests.framework */; };
@@ -47,13 +69,19 @@
 
 /* Begin PBXFileReference section */
 		23833FCCC55F3F3088AD3611 /* Pods-StudyWMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyWMe.debug.xcconfig"; path = "Target Support Files/Pods-StudyWMe/Pods-StudyWMe.debug.xcconfig"; sourceTree = "<group>"; };
+		430B803B2612CC8C00FF8B40 /* KeyboardGuardian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
+		430B80662612CF9A00FF8B40 /* GeometryGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryGetter.swift; sourceTree = "<group>"; };
+		430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardModel.swift; sourceTree = "<group>"; };
+		430B807F2612DD3700FF8B40 /* QuizCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCardModel.swift; sourceTree = "<group>"; };
 		4313BF862603143900F6E522 /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		4313BF9726031A9000F6E522 /* FieldValidators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidators.swift; sourceTree = "<group>"; };
 		432E467C260191320063D020 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		432E4686260191F30063D020 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		432E468B260192330063D020 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
-		432E469B260192A80063D020 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		432E46AC2601A4160063D020 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		435866E226118CF7001E3661 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		435866E726119711001E3661 /* FeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModel.swift; sourceTree = "<group>"; };
+		435866EC2611A4A4001E3661 /* AboutUsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsModel.swift; sourceTree = "<group>"; };
 		4394F4A926030C8F00A8E056 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43A05F5225FC630F00AA5073 /* StudyWMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyWMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43A05F5525FC630F00AA5073 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +98,22 @@
 		43A05F7725FC631100AA5073 /* StudyWMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyWMeUITests.swift; sourceTree = "<group>"; };
 		43A05F7925FC631100AA5073 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43AF960DB7106E54AA1EF69E /* Pods-StudyWMe-StudyWMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyWMe-StudyWMeUITests.release.xcconfig"; path = "Target Support Files/Pods-StudyWMe-StudyWMeUITests/Pods-StudyWMe-StudyWMeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		43C844F6260D6CCD001957F8 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		43C844FB260D6E79001957F8 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		43C84500260D6F6F001957F8 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		43C84505260D6F97001957F8 /* ForgotPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordModel.swift; sourceTree = "<group>"; };
+		43C8451F260D8D35001957F8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		43C84524260D8FAC001957F8 /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
+		43C84529260D9509001957F8 /* MenuButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtons.swift; sourceTree = "<group>"; };
+		43C8452E260D95EC001957F8 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
+		43C84543260E629B001957F8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		43C84548260E62B7001957F8 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		43C8454D260E62CB001957F8 /* AboutUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsView.swift; sourceTree = "<group>"; };
+		43C84564260F4A2A001957F8 /* FlashQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashQuizView.swift; sourceTree = "<group>"; };
+		43C8457C260F5597001957F8 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		43C84584260F8C25001957F8 /* FlashCardCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardCategory.swift; sourceTree = "<group>"; };
+		43C84589260F8CA4001957F8 /* QuizCardCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCardCategory.swift; sourceTree = "<group>"; };
+		43C845A3261152C6001957F8 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		54B357E7651F12CBA0557668 /* Pods-StudyWMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyWMeTests.debug.xcconfig"; path = "Target Support Files/Pods-StudyWMeTests/Pods-StudyWMeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A157368607D64059BC06658 /* Pods_StudyWMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StudyWMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A901E18899D48CDE3D89CC /* Pods-StudyWMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyWMe.release.xcconfig"; path = "Target Support Files/Pods-StudyWMe/Pods-StudyWMe.release.xcconfig"; sourceTree = "<group>"; };
@@ -117,6 +161,51 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		430B80372612CC4400FF8B40 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4313BF9726031A9000F6E522 /* FieldValidators.swift */,
+				430B803B2612CC8C00FF8B40 /* KeyboardGuardian.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		430B804F2612CD1800FF8B40 /* AuthenticationViews */ = {
+			isa = PBXGroup;
+			children = (
+				432E467C260191320063D020 /* LoginView.swift */,
+				432E4686260191F30063D020 /* SignUpView.swift */,
+				432E468B260192330063D020 /* ForgotPasswordView.swift */,
+			);
+			path = AuthenticationViews;
+			sourceTree = "<group>";
+		};
+		430B80502612CD5B00FF8B40 /* UtilityViews */ = {
+			isa = PBXGroup;
+			children = (
+				432E46AC2601A4160063D020 /* CustomTextField.swift */,
+				43C844F6260D6CCD001957F8 /* LoaderView.swift */,
+				43C84524260D8FAC001957F8 /* Drawer.swift */,
+				43C84529260D9509001957F8 /* MenuButtons.swift */,
+				430B80662612CF9A00FF8B40 /* GeometryGetter.swift */,
+			);
+			path = UtilityViews;
+			sourceTree = "<group>";
+		};
+		430B80842612E28600FF8B40 /* ManageFlashCardViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ManageFlashCardViews;
+			sourceTree = "<group>";
+		};
+		430B80852612E29900FF8B40 /* ManageQuizCardViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ManageQuizCardViews;
+			sourceTree = "<group>";
+		};
 		43A05F4925FC630F00AA5073 = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +231,14 @@
 		43A05F5425FC630F00AA5073 /* StudyWMe */ = {
 			isa = PBXGroup;
 			children = (
+				430B80852612E29900FF8B40 /* ManageQuizCardViews */,
+				430B80842612E28600FF8B40 /* ManageFlashCardViews */,
+				430B80502612CD5B00FF8B40 /* UtilityViews */,
+				430B804F2612CD1800FF8B40 /* AuthenticationViews */,
+				430B80372612CC4400FF8B40 /* Utilities */,
+				43C8457B260F5587001957F8 /* DataModels */,
+				43C84542260E6268001957F8 /* MenuSubViews */,
+				43C8450B260D71C3001957F8 /* ViewModels */,
 				4394F4A926030C8F00A8E056 /* GoogleService-Info.plist */,
 				43A05F5525FC630F00AA5073 /* AppDelegate.swift */,
 				43A05F5725FC630F00AA5073 /* SceneDelegate.swift */,
@@ -149,14 +246,9 @@
 				43A05F5B25FC631000AA5073 /* Assets.xcassets */,
 				43A05F6025FC631000AA5073 /* LaunchScreen.storyboard */,
 				43A05F6325FC631100AA5073 /* Info.plist */,
-				432E467C260191320063D020 /* LoginView.swift */,
-				432E4686260191F30063D020 /* SignUpView.swift */,
 				43A05F5D25FC631000AA5073 /* Preview Content */,
-				432E468B260192330063D020 /* ForgotPasswordView.swift */,
-				432E469B260192A80063D020 /* ModelData.swift */,
-				432E46AC2601A4160063D020 /* CustomTextField.swift */,
 				4313BF862603143900F6E522 /* FirebaseAuthentication.swift */,
-				4313BF9726031A9000F6E522 /* FieldValidators.swift */,
+				43C8451F260D8D35001957F8 /* MainView.swift */,
 			);
 			path = StudyWMe;
 			sourceTree = "<group>";
@@ -185,6 +277,52 @@
 				43A05F7925FC631100AA5073 /* Info.plist */,
 			);
 			path = StudyWMeUITests;
+			sourceTree = "<group>";
+		};
+		43C8450B260D71C3001957F8 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				43C8450C260D71DB001957F8 /* AuthenticationViewModel */,
+				43C8452E260D95EC001957F8 /* MenuModel.swift */,
+				43C845A3261152C6001957F8 /* CardView.swift */,
+				435866E226118CF7001E3661 /* ProfileModel.swift */,
+				435866E726119711001E3661 /* FeedbackModel.swift */,
+				435866EC2611A4A4001E3661 /* AboutUsModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		43C8450C260D71DB001957F8 /* AuthenticationViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				43C844FB260D6E79001957F8 /* LoginModel.swift */,
+				43C84500260D6F6F001957F8 /* SignUpModel.swift */,
+				43C84505260D6F97001957F8 /* ForgotPasswordModel.swift */,
+			);
+			path = AuthenticationViewModel;
+			sourceTree = "<group>";
+		};
+		43C84542260E6268001957F8 /* MenuSubViews */ = {
+			isa = PBXGroup;
+			children = (
+				43C84543260E629B001957F8 /* ProfileView.swift */,
+				43C84548260E62B7001957F8 /* FeedbackView.swift */,
+				43C8454D260E62CB001957F8 /* AboutUsView.swift */,
+				43C84564260F4A2A001957F8 /* FlashQuizView.swift */,
+			);
+			path = MenuSubViews;
+			sourceTree = "<group>";
+		};
+		43C8457B260F5587001957F8 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				43C8457C260F5597001957F8 /* Student.swift */,
+				43C84584260F8C25001957F8 /* FlashCardCategory.swift */,
+				43C84589260F8CA4001957F8 /* QuizCardCategory.swift */,
+				430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */,
+				430B807F2612DD3700FF8B40 /* QuizCardModel.swift */,
+			);
+			path = DataModels;
 			sourceTree = "<group>";
 		};
 		DE8D350A7F89BFDC6E621E02 /* Pods */ = {
@@ -439,16 +577,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				430B807B2612DCEE00FF8B40 /* FlashCardModel.swift in Sources */,
+				43C84565260F4A2A001957F8 /* FlashQuizView.swift in Sources */,
+				430B80802612DD3700FF8B40 /* QuizCardModel.swift in Sources */,
+				430B803C2612CC8C00FF8B40 /* KeyboardGuardian.swift in Sources */,
 				43A05F5625FC630F00AA5073 /* AppDelegate.swift in Sources */,
+				43C84549260E62B7001957F8 /* FeedbackView.swift in Sources */,
+				43C8458A260F8CA4001957F8 /* QuizCardCategory.swift in Sources */,
+				43C844FC260D6E79001957F8 /* LoginModel.swift in Sources */,
+				43C8452F260D95EC001957F8 /* MenuModel.swift in Sources */,
+				43C844F7260D6CCD001957F8 /* LoaderView.swift in Sources */,
+				43C84520260D8D35001957F8 /* MainView.swift in Sources */,
 				432E468C260192330063D020 /* ForgotPasswordView.swift in Sources */,
+				435866E326118CF7001E3661 /* ProfileModel.swift in Sources */,
 				4313BF872603143900F6E522 /* FirebaseAuthentication.swift in Sources */,
+				43C8454E260E62CB001957F8 /* AboutUsView.swift in Sources */,
+				43C84501260D6F6F001957F8 /* SignUpModel.swift in Sources */,
+				430B80672612CF9A00FF8B40 /* GeometryGetter.swift in Sources */,
 				43A05F5825FC630F00AA5073 /* SceneDelegate.swift in Sources */,
 				432E467D260191320063D020 /* LoginView.swift in Sources */,
 				432E46AD2601A4160063D020 /* CustomTextField.swift in Sources */,
+				435866E826119711001E3661 /* FeedbackModel.swift in Sources */,
+				43C84506260D6F97001957F8 /* ForgotPasswordModel.swift in Sources */,
 				43A05F5A25FC630F00AA5073 /* ContentView.swift in Sources */,
-				432E469C260192A80063D020 /* ModelData.swift in Sources */,
+				43C84525260D8FAC001957F8 /* Drawer.swift in Sources */,
+				43C84585260F8C26001957F8 /* FlashCardCategory.swift in Sources */,
 				432E4687260191F30063D020 /* SignUpView.swift in Sources */,
+				435866ED2611A4A4001E3661 /* AboutUsModel.swift in Sources */,
+				43C84544260E629B001957F8 /* ProfileView.swift in Sources */,
 				4313BF9826031A9000F6E522 /* FieldValidators.swift in Sources */,
+				43C845A4261152C6001957F8 /* CardView.swift in Sources */,
+				43C8452A260D9509001957F8 /* MenuButtons.swift in Sources */,
+				43C8457D260F5598001957F8 /* Student.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

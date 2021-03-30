@@ -14,10 +14,10 @@ struct CustomTextField: View {
     
     var body: some View{
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)){
-            Image(image)
+            Image(systemName: image)
                 .resizable()
-                .frame(width:40.0, height: 40.0)
-                .clipShape(Circle())
+                .frame(width:30, height: 30)
+                .foregroundColor(Color("DarkPurple"))
                 .padding(.leading)
             ZStack{
                 if placeholderValue == "Password" || placeholderValue == "Re-enter Password"{

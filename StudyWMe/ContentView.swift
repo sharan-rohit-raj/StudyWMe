@@ -11,30 +11,39 @@ import Firebase
 struct ContentView: View {
     //User status
     @AppStorage("log_Status") var userStatus = false
+    @EnvironmentObject var session: FirebaseAuthentication
+    
+    //listen to the changes in the user state
+    func getUser() {
+        session.listenForChangesInState()
+    }
     
     var body: some View {
         ZStack{
-            if userStatus {
-                VStack(spacing: 25){
-                    Text("Logged in as \(Auth.auth().currentUser?.email ?? "")")
-                    Button("Logout"){
-                        //Logout
-                    }
-                }
+            //User is logged in
+            if session.session != nil{
+                MainView()
             }else{
                 NavigationView{
-                    LoginView(model: ModelData())
+                    LoginView()
                 }.navigationViewStyle(StackNavigationViewStyle()) //Need this for iPad screens to force stack naviagtion view
             }
-        }
+//            if userStatus {
+//                MainView()
+//            }else{
+//                NavigationView{
+//                    LoginView()
+//                }.navigationViewStyle(StackNavigationViewStyle()) //Need this for iPad screens to force stack naviagtion view
+//            }
+        }.onAppear(perform: getUser)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    @StateObject var model = ModelData()
     static var previews: some View {
         Group {
             ContentView()
+                .environmentObject(FirebaseAuthentication())
         }
     }
 }
