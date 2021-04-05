@@ -11,8 +11,13 @@
 		430B80672612CF9A00FF8B40 /* GeometryGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80662612CF9A00FF8B40 /* GeometryGetter.swift */; };
 		430B807B2612DCEE00FF8B40 /* FlashCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */; };
 		430B80802612DD3700FF8B40 /* QuizCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B807F2612DD3700FF8B40 /* QuizCardModel.swift */; };
+		430B80872612E36E00FF8B40 /* AddFlashCardCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80862612E36E00FF8B40 /* AddFlashCardCategoryView.swift */; };
+		430B80A62612F19000FF8B40 /* AddFlashCardCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80A52612F19000FF8B40 /* AddFlashCardCategoryModel.swift */; };
+		430B80B02612F76300FF8B40 /* NavigationCustomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80AF2612F76300FF8B40 /* NavigationCustomizer.swift */; };
 		4313BF872603143900F6E522 /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313BF862603143900F6E522 /* FirebaseAuthentication.swift */; };
 		4313BF9826031A9000F6E522 /* FieldValidators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313BF9726031A9000F6E522 /* FieldValidators.swift */; };
+		43155BE4261AAC7B004ACD5F /* AQuizCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43155BE3261AAC7B004ACD5F /* AQuizCard.swift */; };
+		43155BE9261AAFD9004ACD5F /* QuizOptionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43155BE8261AAFD9004ACD5F /* QuizOptionsModel.swift */; };
 		432E467D260191320063D020 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E467C260191320063D020 /* LoginView.swift */; };
 		432E4687260191F30063D020 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E4686260191F30063D020 /* SignUpView.swift */; };
 		432E468C260192330063D020 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432E468B260192330063D020 /* ForgotPasswordView.swift */; };
@@ -20,6 +25,12 @@
 		435866E326118CF7001E3661 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866E226118CF7001E3661 /* ProfileModel.swift */; };
 		435866E826119711001E3661 /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866E726119711001E3661 /* FeedbackModel.swift */; };
 		435866ED2611A4A4001E3661 /* AboutUsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866EC2611A4A4001E3661 /* AboutUsModel.swift */; };
+		4390F70826191E2E0001D875 /* AddQuizCardCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F70726191E2E0001D875 /* AddQuizCardCategoryView.swift */; };
+		4390F70D26191EEA0001D875 /* AddQuizCardCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F70C26191EEA0001D875 /* AddQuizCardCategoryModel.swift */; };
+		4390F73026192F610001D875 /* VisualEffectBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F72F26192F610001D875 /* VisualEffectBlur.swift */; };
+		4390F74426196E9F0001D875 /* ViewFlashCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F74326196E9F0001D875 /* ViewFlashCards.swift */; };
+		4390F74926196EAF0001D875 /* ViewQuizCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F74826196EAF0001D875 /* ViewQuizCards.swift */; };
+		4390F751261A7EB10001D875 /* AFlashCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F750261A7EB10001D875 /* AFlashCard.swift */; };
 		4394F4AA26030C8F00A8E056 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4394F4A926030C8F00A8E056 /* GoogleService-Info.plist */; };
 		43A05F5625FC630F00AA5073 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F5525FC630F00AA5073 /* AppDelegate.swift */; };
 		43A05F5825FC630F00AA5073 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F5725FC630F00AA5073 /* SceneDelegate.swift */; };
@@ -73,8 +84,13 @@
 		430B80662612CF9A00FF8B40 /* GeometryGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryGetter.swift; sourceTree = "<group>"; };
 		430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardModel.swift; sourceTree = "<group>"; };
 		430B807F2612DD3700FF8B40 /* QuizCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCardModel.swift; sourceTree = "<group>"; };
+		430B80862612E36E00FF8B40 /* AddFlashCardCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashCardCategoryView.swift; sourceTree = "<group>"; };
+		430B80A52612F19000FF8B40 /* AddFlashCardCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashCardCategoryModel.swift; sourceTree = "<group>"; };
+		430B80AF2612F76300FF8B40 /* NavigationCustomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCustomizer.swift; sourceTree = "<group>"; };
 		4313BF862603143900F6E522 /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		4313BF9726031A9000F6E522 /* FieldValidators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidators.swift; sourceTree = "<group>"; };
+		43155BE3261AAC7B004ACD5F /* AQuizCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AQuizCard.swift; sourceTree = "<group>"; };
+		43155BE8261AAFD9004ACD5F /* QuizOptionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOptionsModel.swift; sourceTree = "<group>"; };
 		432E467C260191320063D020 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		432E4686260191F30063D020 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		432E468B260192330063D020 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -82,6 +98,12 @@
 		435866E226118CF7001E3661 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		435866E726119711001E3661 /* FeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModel.swift; sourceTree = "<group>"; };
 		435866EC2611A4A4001E3661 /* AboutUsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsModel.swift; sourceTree = "<group>"; };
+		4390F70726191E2E0001D875 /* AddQuizCardCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuizCardCategoryView.swift; sourceTree = "<group>"; };
+		4390F70C26191EEA0001D875 /* AddQuizCardCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuizCardCategoryModel.swift; sourceTree = "<group>"; };
+		4390F72F26192F610001D875 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
+		4390F74326196E9F0001D875 /* ViewFlashCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFlashCards.swift; sourceTree = "<group>"; };
+		4390F74826196EAF0001D875 /* ViewQuizCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewQuizCards.swift; sourceTree = "<group>"; };
+		4390F750261A7EB10001D875 /* AFlashCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFlashCard.swift; sourceTree = "<group>"; };
 		4394F4A926030C8F00A8E056 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43A05F5225FC630F00AA5073 /* StudyWMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyWMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43A05F5525FC630F00AA5073 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,8 +186,10 @@
 		430B80372612CC4400FF8B40 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4390F72F26192F610001D875 /* VisualEffectBlur.swift */,
 				4313BF9726031A9000F6E522 /* FieldValidators.swift */,
 				430B803B2612CC8C00FF8B40 /* KeyboardGuardian.swift */,
+				430B80AF2612F76300FF8B40 /* NavigationCustomizer.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -183,6 +207,7 @@
 		430B80502612CD5B00FF8B40 /* UtilityViews */ = {
 			isa = PBXGroup;
 			children = (
+				43C845A3261152C6001957F8 /* CardView.swift */,
 				432E46AC2601A4160063D020 /* CustomTextField.swift */,
 				43C844F6260D6CCD001957F8 /* LoaderView.swift */,
 				43C84524260D8FAC001957F8 /* Drawer.swift */,
@@ -192,18 +217,17 @@
 			path = UtilityViews;
 			sourceTree = "<group>";
 		};
-		430B80842612E28600FF8B40 /* ManageFlashCardViews */ = {
+		430B80842612E28600FF8B40 /* ManageCardViews */ = {
 			isa = PBXGroup;
 			children = (
+				430B80862612E36E00FF8B40 /* AddFlashCardCategoryView.swift */,
+				4390F70726191E2E0001D875 /* AddQuizCardCategoryView.swift */,
+				4390F74326196E9F0001D875 /* ViewFlashCards.swift */,
+				4390F74826196EAF0001D875 /* ViewQuizCards.swift */,
+				4390F750261A7EB10001D875 /* AFlashCard.swift */,
+				43155BE3261AAC7B004ACD5F /* AQuizCard.swift */,
 			);
-			path = ManageFlashCardViews;
-			sourceTree = "<group>";
-		};
-		430B80852612E29900FF8B40 /* ManageQuizCardViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ManageQuizCardViews;
+			path = ManageCardViews;
 			sourceTree = "<group>";
 		};
 		43A05F4925FC630F00AA5073 = {
@@ -231,8 +255,7 @@
 		43A05F5425FC630F00AA5073 /* StudyWMe */ = {
 			isa = PBXGroup;
 			children = (
-				430B80852612E29900FF8B40 /* ManageQuizCardViews */,
-				430B80842612E28600FF8B40 /* ManageFlashCardViews */,
+				430B80842612E28600FF8B40 /* ManageCardViews */,
 				430B80502612CD5B00FF8B40 /* UtilityViews */,
 				430B804F2612CD1800FF8B40 /* AuthenticationViews */,
 				430B80372612CC4400FF8B40 /* Utilities */,
@@ -284,10 +307,11 @@
 			children = (
 				43C8450C260D71DB001957F8 /* AuthenticationViewModel */,
 				43C8452E260D95EC001957F8 /* MenuModel.swift */,
-				43C845A3261152C6001957F8 /* CardView.swift */,
 				435866E226118CF7001E3661 /* ProfileModel.swift */,
 				435866E726119711001E3661 /* FeedbackModel.swift */,
 				435866EC2611A4A4001E3661 /* AboutUsModel.swift */,
+				430B80A52612F19000FF8B40 /* AddFlashCardCategoryModel.swift */,
+				4390F70C26191EEA0001D875 /* AddQuizCardCategoryModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -321,6 +345,7 @@
 				43C84589260F8CA4001957F8 /* QuizCardCategory.swift */,
 				430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */,
 				430B807F2612DD3700FF8B40 /* QuizCardModel.swift */,
+				43155BE8261AAFD9004ACD5F /* QuizOptionsModel.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -582,30 +607,41 @@
 				430B80802612DD3700FF8B40 /* QuizCardModel.swift in Sources */,
 				430B803C2612CC8C00FF8B40 /* KeyboardGuardian.swift in Sources */,
 				43A05F5625FC630F00AA5073 /* AppDelegate.swift in Sources */,
+				4390F70826191E2E0001D875 /* AddQuizCardCategoryView.swift in Sources */,
 				43C84549260E62B7001957F8 /* FeedbackView.swift in Sources */,
 				43C8458A260F8CA4001957F8 /* QuizCardCategory.swift in Sources */,
+				430B80B02612F76300FF8B40 /* NavigationCustomizer.swift in Sources */,
 				43C844FC260D6E79001957F8 /* LoginModel.swift in Sources */,
+				43155BE4261AAC7B004ACD5F /* AQuizCard.swift in Sources */,
 				43C8452F260D95EC001957F8 /* MenuModel.swift in Sources */,
 				43C844F7260D6CCD001957F8 /* LoaderView.swift in Sources */,
 				43C84520260D8D35001957F8 /* MainView.swift in Sources */,
+				4390F70D26191EEA0001D875 /* AddQuizCardCategoryModel.swift in Sources */,
 				432E468C260192330063D020 /* ForgotPasswordView.swift in Sources */,
 				435866E326118CF7001E3661 /* ProfileModel.swift in Sources */,
 				4313BF872603143900F6E522 /* FirebaseAuthentication.swift in Sources */,
+				4390F751261A7EB10001D875 /* AFlashCard.swift in Sources */,
 				43C8454E260E62CB001957F8 /* AboutUsView.swift in Sources */,
 				43C84501260D6F6F001957F8 /* SignUpModel.swift in Sources */,
 				430B80672612CF9A00FF8B40 /* GeometryGetter.swift in Sources */,
 				43A05F5825FC630F00AA5073 /* SceneDelegate.swift in Sources */,
 				432E467D260191320063D020 /* LoginView.swift in Sources */,
 				432E46AD2601A4160063D020 /* CustomTextField.swift in Sources */,
+				4390F73026192F610001D875 /* VisualEffectBlur.swift in Sources */,
 				435866E826119711001E3661 /* FeedbackModel.swift in Sources */,
 				43C84506260D6F97001957F8 /* ForgotPasswordModel.swift in Sources */,
 				43A05F5A25FC630F00AA5073 /* ContentView.swift in Sources */,
 				43C84525260D8FAC001957F8 /* Drawer.swift in Sources */,
+				430B80A62612F19000FF8B40 /* AddFlashCardCategoryModel.swift in Sources */,
 				43C84585260F8C26001957F8 /* FlashCardCategory.swift in Sources */,
 				432E4687260191F30063D020 /* SignUpView.swift in Sources */,
+				4390F74926196EAF0001D875 /* ViewQuizCards.swift in Sources */,
+				4390F74426196E9F0001D875 /* ViewFlashCards.swift in Sources */,
+				43155BE9261AAFD9004ACD5F /* QuizOptionsModel.swift in Sources */,
 				435866ED2611A4A4001E3661 /* AboutUsModel.swift in Sources */,
 				43C84544260E629B001957F8 /* ProfileView.swift in Sources */,
 				4313BF9826031A9000F6E522 /* FieldValidators.swift in Sources */,
+				430B80872612E36E00FF8B40 /* AddFlashCardCategoryView.swift in Sources */,
 				43C845A4261152C6001957F8 /* CardView.swift in Sources */,
 				43C8452A260D9509001957F8 /* MenuButtons.swift in Sources */,
 				43C8457D260F5598001957F8 /* Student.swift in Sources */,

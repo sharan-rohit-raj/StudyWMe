@@ -9,6 +9,6 @@ import Foundation
 struct QuizCardModel: Identifiable {
      var id: Int = -1
      var question: String = ""
-     var options: [String] = []
+     var options: [QuizOptionsModel] = [QuizOptionsModel]()
      var correctOption: Int = -1
 }

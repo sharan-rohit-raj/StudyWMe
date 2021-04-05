@@ -23,11 +23,16 @@ struct ContentView: View {
             //User is logged in
             if session.session != nil{
                 MainView()
+
             }else{
                 NavigationView{
                     LoginView()
                 }.navigationViewStyle(StackNavigationViewStyle()) //Need this for iPad screens to force stack naviagtion view
             }
+            
+            
+            
+            
 //            if userStatus {
 //                MainView()
 //            }else{

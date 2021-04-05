@@ -19,8 +19,13 @@ struct FlashQuizView: View {
                                                 QuizCardCategory(id: 1, title: "CP216", image: "tallBuilding"),
                                                 QuizCardCategory(id: 2, title: "CP214", image: "torontoBuilding"),
                                                 QuizCardCategory(id: 3, title: "CP164", image: "foggyBuilding")]
+    @State var colors: [[Color]] = [[Color.black, Color("Grape"), Color("Peach"), Color("Sky"), Color.black],
+                                    [Color.black,Color("Sky"), Color("Peach"), Color.black],
+                                    [Color.black,Color("KindaBlue"), Color("Grape"),Color("Sky"), Color.black],
+                                    [Color.black,Color("LightMagenta"), Color("KindaBlue"), Color("Grape"), Color.black]]
     
-    @State var scrollMoved = 0
+    @State var showAddCardCategory = false
+    @State var showAddQuizCardCategory = false
     var body: some View {
         NavigationView{
             ScrollView(.vertical, showsIndicators: false){
@@ -40,46 +45,68 @@ struct FlashQuizView: View {
                     
                     
                     //MARK:- Flash Card Category UI
-                    VStack(spacing: 30){
-                        HStack{
-                            Text("Flash Card Category")
-                                .font(Font.custom("Noteworthy", size: 25).bold())
-                                .foregroundColor(Color.white)
-                                .padding(.leading, 15)
-                            Spacer()
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                                Image(systemName: "plus.circle.fill")
-                                    .resizable()
-                                    .frame(width: 45, height: 45)
-                                    .foregroundColor(.white)
-                            })
-                            .padding(.trailing, 15)
-                            .padding(.top, 15)
-                        }
-//                        .padding(.top, 30)
+                    ZStack {
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color("DarkPurple"), Color("DarkPurple"), Color("DarkMagenta"), Color("LightMagenta"),Color("Peach")]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                            
+                        )
+//                        VisualEffectBlur(
+//                            blurStyle: .systemUltraThinMaterialDark
+//                        )
                         
-                        //Flash Cards
-                        ScrollView(.horizontal, showsIndicators: false){
-                            HStack(spacing: 20){
-                                ForEach(flashCardsCategories) { flashCard in
-                                    GeometryReader{ geometry in
-                                        CardView(title: flashCard.title, image: flashCard.image)
-                                            .rotation3DEffect(
-                                                Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
-                                                axis: (x: 0, y: 2.5, z: 0)
-                                            )
-                                    }
-                                    .frame(width: 380, height: 600)
-
+                        VStack(spacing: 30){
+                            HStack{
+                                Text("Flash Card Category")
+                                    .font(Font.custom("Noteworthy", size: 25).bold())
+                                    .foregroundColor(Color.white)
+                                    .padding(.leading, 15)
+                                Spacer()
+                                
+                                Button(action: {
+                                    showAddCardCategory.toggle()
+                                }){
+                                    Image(systemName: "plus.circle.fill")
+                                        .resizable()
+                                        .frame(width: 45, height: 45)
+                                        .foregroundColor(.white)
+                                        .padding(.trailing, 15)
+                                        .padding(.top, 15)
                                 }
-                            }.padding(80)
-                            Spacer()
+                                .sheet(isPresented: $showAddCardCategory){
+                                    AddFlashCardCategoryView(flashCardCat: "", isNewCat: true)
+                                }
+                                .background(Color.white.opacity(0))
+                                
+
+                            }
+    //                        .padding(.top, 30)
+                            
+                            //Flash Cards
+                            ScrollView(.horizontal, showsIndicators: false){
+                                HStack(spacing: 20){
+                                    ForEach(flashCardsCategories) { flashCard in
+                                        GeometryReader{ geometry in
+                                            CardView(title: flashCard.title, image: flashCard.image, colors: colors.randomElement()!, isFlashCard: true)
+                                                .rotation3DEffect(
+                                                    Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
+                                                    axis: (x: 0, y: 2.5, z: 0)
+                                                )
+                                        }
+                                        .frame(width: 380, height: 600)
+
+                                    }
+                                }.padding(80)
+                                Spacer()
+                            }
+                            .padding(.top, 80)
+                            .frame(width: UIScreen.main.bounds.width * 0.95, height: 600)
                         }
-                        .padding(.top, 80)
-                        .frame(width: UIScreen.main.bounds.width * 0.95, height: 600)
+
                     }
                     .frame(width: UIScreen.main.bounds.width * 0.95, height: 700)
-                    .background(Color("DarkPurple"))
+                    .background(Color.clear)
                     .cornerRadius(25)
                     .shadow(color:  Color("LightPurple"), radius: 10, x: 0.0, y: 10)
                     .padding(.top, 25)
@@ -87,47 +114,62 @@ struct FlashQuizView: View {
                     
                     
                     //MARK:- Quiz Card Category UI
-                    VStack(spacing: 30){
-                        HStack{
-                            Text("Quiz Category")
-                                .font(Font.custom("Noteworthy", size: 25).bold())
-                                .foregroundColor(Color.white)
-                                .padding(.leading, 15)
-                            Spacer()
+                    ZStack {
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color("DarkPurple"), Color("DarkPurple"), Color("DarkMagenta"), Color("LightMagenta"),Color("Peach")]),
+                            startPoint: .topTrailing,
+                            endPoint: .bottomLeading
                             
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                                Image(systemName: "plus.circle.fill")
-                                    .resizable()
-                                    .frame(width: 45, height: 45)
-                                    .foregroundColor(.white)
-                            })
-                            .padding(.trailing, 15)
-                            .padding(.top, 15)
-                        }
-    //                    .padding(.top, 30)
-                        
-                        //Quiz Cards
-                        ScrollView(.horizontal, showsIndicators: false){
-                            HStack(spacing: 20){
-                                ForEach(quizCardCategories) { quizCard in
-                                    GeometryReader{ geometry in
-                                        CardView(title: quizCard.title, image: quizCard.image)
-                                            .rotation3DEffect(
-                                                Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
-                                                axis: (x: 0, y: 2.5, z: 0)
-                                            )
-                                    }
-                                    .frame(width: 380, height: 600)
-
+                        )
+                        VStack(spacing: 30){
+                            HStack{
+                                Text("Quiz Category")
+                                    .font(Font.custom("Noteworthy", size: 25).bold())
+                                    .foregroundColor(Color.white)
+                                    .padding(.leading, 15)
+                                Spacer()
+                                
+                                Button(action: {
+                                    showAddQuizCardCategory.toggle()
+                                }){
+                                    Image(systemName: "plus.circle.fill")
+                                        .resizable()
+                                        .frame(width: 45, height: 45)
+                                        .foregroundColor(.white)
+                                        .padding(.trailing, 15)
+                                        .padding(.top, 15)
                                 }
-                            }.padding(80)
-                            Spacer()
+                                .sheet(isPresented: $showAddQuizCardCategory){
+                                    AddQuizCardCategoryView(quizCardCat: "", isNewCat: true)
+                                }
+                                .background(Color.white.opacity(0))
+                            }
+        //                    .padding(.top, 30)
+                            
+                            //Quiz Cards
+                            ScrollView(.horizontal, showsIndicators: false){
+                                HStack(spacing: 20){
+                                    ForEach(quizCardCategories) { quizCard in
+                                        GeometryReader{ geometry in
+                                            CardView(title: quizCard.title, image: quizCard.image, colors: colors.randomElement()!, isFlashCard: false)
+                                                .rotation3DEffect(
+                                                    Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
+                                                    axis: (x: 0, y: 2.5, z: 0)
+                                                )
+                                        }
+                                        .frame(width: 380, height: 600)
+
+                                    }
+                                }.padding(80)
+                                Spacer()
+                            }
+                            .padding(.top, 80)
+                            .frame(width: UIScreen.main.bounds.width * 0.95, height: 600)
                         }
-                        .padding(.top, 80)
-                        .frame(width: UIScreen.main.bounds.width, height: 600)
+
                     }
                     .frame(width: UIScreen.main.bounds.width * 0.95, height: 700)
-                    .background(Color("DarkPurple"))
+                    .background(Color.clear)
                     .cornerRadius(25)
                     .shadow(color: Color("LightPurple"), radius: 10, x: 0.0, y: 10)
                     .padding(.top, 25)
