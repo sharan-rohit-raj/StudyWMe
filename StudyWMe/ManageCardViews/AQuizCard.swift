@@ -10,7 +10,7 @@ import SwiftUI
 struct AQuizCard: View {
     @State var question: String
     @State var options: [QuizOptionsModel]
-    @State var correctOptionIndex: Int
+    @State var correctOptionIndex: String
     @State var isTapped = false
     
     var body: some View {
@@ -35,9 +35,9 @@ struct AQuizCard: View {
                     .padding(.bottom, 40)
                 
                 if !self.isTapped {
-                    ForEach(options) { option in
+                    ForEach(options, id: \.optionID) { option in
                         Button(action:  {
-                            if option.id == self.correctOptionIndex {
+                            if option.optionID == self.correctOptionIndex {
                                 withAnimation (.easeOut){
                                     self.isTapped.toggle()
                                 }
@@ -60,7 +60,7 @@ struct AQuizCard: View {
                 } else {
                     
                     VStack (spacing: 40){
-                        Text(options[correctOptionIndex].option)
+                        Text(options[Int(correctOptionIndex)!].option)
                             .font(Font.custom("Noteworthy", size: 45).bold())
                             .foregroundColor(.white)
                             .transition(.scale)
@@ -94,9 +94,9 @@ struct AQuizCard: View {
 struct AQuizCard_Previews: PreviewProvider {
 
     static var previews: some View {
-        AQuizCard(question: "What is my name?", options: [QuizOptionsModel(id: 0, option: "Sharan"),
-                  QuizOptionsModel(id: 1, option: "Rohit"),
-                  QuizOptionsModel(id: 2, option: "Raj"),
-                  QuizOptionsModel(id: 3, option: "All of the above")], correctOptionIndex: 3)
+        AQuizCard(question: "What is my name?", options: [QuizOptionsModel(id: "0", option: "Sharan"),
+                  QuizOptionsModel(id: "1", option: "Rohit"),
+                  QuizOptionsModel(id: "2", option: "Raj"),
+                  QuizOptionsModel(id: "3", option: "All of the above")], correctOptionIndex: "3")
     }
 }

@@ -55,7 +55,7 @@ struct ForgotPasswordView: View {
                                 self.isLoading.toggle()
                             }
                             //Begin sending password reset email
-                            Auth.auth().sendPasswordReset(withEmail: model.passwordResetEmail){ error in
+                            authentication.forgotPassword(email: model.passwordResetEmail) { error in
                                 //Stop loading
                                 self.isLoading.toggle()
                                 
@@ -73,6 +73,28 @@ struct ForgotPasswordView: View {
                                     self.showAlertDialog.toggle()
                                 }
                             }
+                            
+                            
+                            
+                            
+//                            Auth.auth().sendPasswordReset(withEmail: model.passwordResetEmail){ error in
+//                                //Stop loading
+//                                self.isLoading.toggle()
+//
+//                                errorMessage = error?.localizedDescription ?? ""
+//
+//                                //Password reset email was sent successfully
+//                                if errorMessage == "" {
+//                                    self.alertDialogType = .success
+//                                    successMessage = "An email has been sent with a password reset link. Please check your email."
+//                                    self.showAlertDialog.toggle()
+//                                }
+//                                //Error sending password reset email
+//                                else{
+//                                    self.alertDialogType = .error
+//                                    self.showAlertDialog.toggle()
+//                                }
+//                            }
                         }
                     }, label: {
                         Text("Send Email").font(Font.custom("Noteworthy", size: 20).bold())

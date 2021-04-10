@@ -13,7 +13,8 @@ struct CardView: View {
     @State var colors: [Color]
     @State var isFlashCard: Bool
     @State var isSheetPresented: Bool = false
-
+    @State var flashCardCategory: FlashCardCategory
+    @State var quizCardCategory: QuizCardCategory
     
     var body: some View {
         ZStack{
@@ -22,12 +23,6 @@ struct CardView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 350, height: 450)
                 .blur(radius: 4)
-            
-//            LinearGradient(
-//                gradient: Gradient(colors: colors),
-//                startPoint: .bottom,
-//                endPoint: .top
-//            )
 
             Text(title)
                 .font(Font.custom("Noteworthy", size: 40)).bold()
@@ -42,9 +37,9 @@ struct CardView: View {
         }
         .fullScreenCover(isPresented: $isSheetPresented) {
             if isFlashCard{
-                ViewFlashCards.init(title: title)
+                ViewFlashCards.init(title: title, flashCardCategory: flashCardCategory)
             }else{
-                ViewQuizCards.init(title: title)
+                ViewQuizCards.init(title: title, quizCardCategory: quizCardCategory)
             }
         }
         
@@ -53,6 +48,6 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(title: "iPhone Programming", image: "moonFlashCard", colors: [Color("Grape"), Color("Sky")], isFlashCard: true)
+        CardView(title: "iPhone Programming", image: "moonFlashCard", colors: [Color("Grape"), Color("Sky")], isFlashCard: true, flashCardCategory: FlashCardCategory(id: "", flashCardCarId: "", title: "", image: "", flashCards: []), quizCardCategory: QuizCardCategory())
     }
 }

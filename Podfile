@@ -7,6 +7,8 @@ target 'StudyWMe' do
 
   # Pods for StudyWMe
 pod 'Firebase/Auth' 
+pod 'Firebase/Firestore'
+pod 'FirebaseFirestoreSwift', '~> 7.0-beta'
 
   target 'StudyWMeTests' do
     inherit! :search_paths

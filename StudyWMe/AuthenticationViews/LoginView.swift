@@ -70,21 +70,12 @@ struct LoginView: View {
                                     
                                     //No error in login
                                     if errorMessage == ""{
-                                        let user = result?.user
-                                        
-                                        //User did not verify email id
-                                        if !user!.isEmailVerified{
-                                            errorMessage = "Please verify your email before logging in"
-                                            showAlertDialog.toggle()
-                                            self.userStatus = false
-                                            try! Auth.auth().signOut()
-                                        }else{
-                                            //Set user state as logged in
-                                            withAnimation{
-                                                self.userStatus = true
-                                            }
-                                            print("User logged in")
+                                        //Set user state as logged in
+                                        withAnimation{
+                                            self.userStatus = true
                                         }
+                                        print("User logged in")
+                                        
 
                                     }else{
                                         showAlertDialog.toggle()

@@ -6,11 +6,39 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct Drawer: View {
     @EnvironmentObject var menuModel: MenuModel
     var animation: Namespace.ID
-
+    @State var displayName = Auth.auth().currentUser?.displayName ?? "Student"
+    
+    
+    //Function to decide the salutation for the user
+    func salutation()-> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        var salutation: String = "Good Day,"
+        
+        if hour >= 6 && hour < 12 {
+            salutation = "Good Morning,"
+        }
+        else if hour >= 12 && hour < 16 {
+            salutation = "Good Afternoon,"
+        }
+        else if hour >= 16 && hour < 20 {
+            salutation = "Good Evening,"
+        }
+        else if hour >= 20 && hour < 24 {
+            salutation = "Nighty Night,"
+        }
+        else if hour >= 1 && hour < 6 {
+            salutation = "Sleep tight,"
+        }
+        
+        return salutation
+    }
     
     var body: some View {
         VStack{
@@ -30,9 +58,9 @@ struct Drawer: View {
             .padding(.top, 50)
             
             VStack(alignment: .leading, spacing: 10, content: {
-                Text("Hello")
+                Text(salutation())
                     .font(.title2)
-                Text("Student")
+                Text(displayName)
                     .font(.title)
                     .fontWeight(.heavy)
                 
@@ -66,6 +94,9 @@ struct Drawer: View {
         .cornerRadius(30)
         .background(Color("DarkPurple"))
         .ignoresSafeArea(.all, edges: .vertical)
+        .onAppear(perform: {
+            displayName = Auth.auth().currentUser?.displayName ?? "Student"
+        })
     }
 }
 

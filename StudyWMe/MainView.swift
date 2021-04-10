@@ -16,6 +16,10 @@ struct MainView: View {
     
     @StateObject var menuModel = MenuModel()
     @Namespace var animation
+    //Flash Card Category
+    @ObservedObject var flashCardsCategories: FlashCardCategories = FlashCardCategories()
+    @ObservedObject var quizCardCategoriesModel: QuizCardCategories = QuizCardCategories()
+    @State var displayName = Auth.auth().currentUser?.displayName ?? "Student"
     var body: some View {
             ZStack {
                 GeometryReader{ geometry in
@@ -24,7 +28,7 @@ struct MainView: View {
                         Drawer(animation: animation)
                         //Main View
                         TabView(selection: $menuModel.selectedMenu){
-                            FlashQuizView()
+                            FlashQuizView(flashCardsCategories: flashCardsCategories, quizCardCategoriesModel: quizCardCategoriesModel )
                                 .tag("Home")
                             ProfileView()
                                 .tag("Profile")
@@ -50,6 +54,11 @@ struct MainView: View {
 
                 }
             }//ZStack
+            .onAppear {
+                displayName = Auth.auth().currentUser?.displayName ?? "Student"
+                self.flashCardsCategories.fetchData(studentUID: Auth.auth().currentUser!.uid)
+                self.quizCardCategoriesModel.fetchData(studentUID: Auth.auth().currentUser!.uid)
+            }
         
     }
 }

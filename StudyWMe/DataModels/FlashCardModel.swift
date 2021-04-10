@@ -6,8 +6,18 @@
 //
 
 import Foundation
-struct FlashCardModel: Identifiable {
-     var id: Int = 0
+import FirebaseFirestoreSwift
+
+struct FlashCardModel: Identifiable, Codable {
+     @DocumentID var id: String? = UUID().uuidString
+     var flashCardId: String = ""
      var title: String = ""
      var details: String = ""
+    
+    enum CodingKeys : String, CodingKey {
+        case id
+        case flashCardId
+        case title
+        case details
+    }
 }

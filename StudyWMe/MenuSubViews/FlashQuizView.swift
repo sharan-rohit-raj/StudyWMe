@@ -6,19 +6,16 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct FlashQuizView: View {
-    //Sample Flash Card Category
-    @State var flashCardsCategories: [FlashCardCategory] = [FlashCardCategory(id: 0, title: "CP373", image: "forestFlashCard"),
-                                                  FlashCardCategory(id: 1, title: "CP372",image: "moonFlashCard"),
-                                                  FlashCardCategory(id: 2, title: "CP351", image: "orangeTreeFlashCard"),
-                                                  FlashCardCategory(id: 3, title: "CP363", image: "raysFlashCard"),
-                                                  FlashCardCategory(id: 4, title: "CP3863", image: "sunsetFlashCard")]
-    //Sampe Quiz Card Category
-    @State var quizCardCategories: [QuizCardCategory] = [QuizCardCategory(id: 0, title: "CP264", image: "moonBuilding"),
-                                                QuizCardCategory(id: 1, title: "CP216", image: "tallBuilding"),
-                                                QuizCardCategory(id: 2, title: "CP214", image: "torontoBuilding"),
-                                                QuizCardCategory(id: 3, title: "CP164", image: "foggyBuilding")]
+    //Flash Card Category
+    @ObservedObject var flashCardsCategories: FlashCardCategories
+        
+    //Quiz Card Category
+    @ObservedObject var quizCardCategoriesModel: QuizCardCategories
+    
+    
     @State var colors: [[Color]] = [[Color.black, Color("Grape"), Color("Peach"), Color("Sky"), Color.black],
                                     [Color.black,Color("Sky"), Color("Peach"), Color.black],
                                     [Color.black,Color("KindaBlue"), Color("Grape"),Color("Sky"), Color.black],
@@ -26,6 +23,9 @@ struct FlashQuizView: View {
     
     @State var showAddCardCategory = false
     @State var showAddQuizCardCategory = false
+    @State var displayName = Auth.auth().currentUser?.displayName ?? "Student"
+    @State var isAddFlashCatClosed: Bool = false
+    
     var body: some View {
         NavigationView{
             ScrollView(.vertical, showsIndicators: false){
@@ -35,7 +35,7 @@ struct FlashQuizView: View {
                             .font(Font.custom("Noteworthy", size: 35).bold())
                             .foregroundColor(Color("DarkPurple"))
 
-                        Text("Student")
+                        Text(displayName)
                             .font(Font.custom("Noteworthy", size: 35).bold())
                             .foregroundColor(Color("DarkPurple"))
                         Spacer()
@@ -65,7 +65,8 @@ struct FlashQuizView: View {
                                 Spacer()
                                 
                                 Button(action: {
-                                    showAddCardCategory.toggle()
+                                    self.isAddFlashCatClosed = false
+                                    self.showAddCardCategory.toggle()
                                 }){
                                     Image(systemName: "plus.circle.fill")
                                         .resizable()
@@ -75,7 +76,7 @@ struct FlashQuizView: View {
                                         .padding(.top, 15)
                                 }
                                 .sheet(isPresented: $showAddCardCategory){
-                                    AddFlashCardCategoryView(flashCardCat: "", isNewCat: true)
+                                    AddFlashCardCategoryView(flashCardCat: .constant(FlashCardCategory()), isNewCat: true, isAddFlashCatClosed: self.$isAddFlashCatClosed)
                                 }
                                 .background(Color.white.opacity(0))
                                 
@@ -84,24 +85,33 @@ struct FlashQuizView: View {
     //                        .padding(.top, 30)
                             
                             //Flash Cards
-                            ScrollView(.horizontal, showsIndicators: false){
-                                HStack(spacing: 20){
-                                    ForEach(flashCardsCategories) { flashCard in
-                                        GeometryReader{ geometry in
-                                            CardView(title: flashCard.title, image: flashCard.image, colors: colors.randomElement()!, isFlashCard: true)
-                                                .rotation3DEffect(
-                                                    Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
-                                                    axis: (x: 0, y: 2.5, z: 0)
-                                                )
-                                        }
-                                        .frame(width: 380, height: 600)
+                            if flashCardsCategories.flashCardCategories.count != 0 {
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack(spacing: 20){
+                                        ForEach(flashCardsCategories.flashCardCategories, id: \.flashCardCarId) { flashCard in
+                                            GeometryReader{ geometry in
+                                                CardView(title: flashCard.title, image: flashCard.image, colors: colors.randomElement()!, isFlashCard: true, flashCardCategory: flashCard, quizCardCategory: QuizCardCategory())
+                                                    .rotation3DEffect(
+                                                        Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
+                                                        axis: (x: 0, y: 2.5, z: 0)
+                                                    )
+                                            }
+                                            .frame(width: 380, height: 600)
 
-                                    }
-                                }.padding(80)
-                                Spacer()
+                                        }
+                                    }.padding(80)
+                                    Spacer()
+                                }
+                                .padding(.top, 80)
+                                .frame(width: UIScreen.main.bounds.width * 0.95, height: 600)
+                            } else {
+                                Text("There are currently no Flash Card Categories. Click on the + button to add.")
+                                    .font(Font.custom("Noteworthy", size: 35).bold())
+                                    .foregroundColor(.white)
+                                    .frame(width: UIScreen.main.bounds.width * 0.65, height: 600, alignment: .center)
+                                    .offset(y: -40)
+                                    
                             }
-                            .padding(.top, 80)
-                            .frame(width: UIScreen.main.bounds.width * 0.95, height: 600)
                         }
 
                     }
@@ -140,31 +150,39 @@ struct FlashQuizView: View {
                                         .padding(.top, 15)
                                 }
                                 .sheet(isPresented: $showAddQuizCardCategory){
-                                    AddQuizCardCategoryView(quizCardCat: "", isNewCat: true)
+                                    AddQuizCardCategoryView(quizCardCat: .constant(QuizCardCategory()), isNewCat: true)
                                 }
                                 .background(Color.white.opacity(0))
                             }
         //                    .padding(.top, 30)
                             
                             //Quiz Cards
-                            ScrollView(.horizontal, showsIndicators: false){
-                                HStack(spacing: 20){
-                                    ForEach(quizCardCategories) { quizCard in
-                                        GeometryReader{ geometry in
-                                            CardView(title: quizCard.title, image: quizCard.image, colors: colors.randomElement()!, isFlashCard: false)
-                                                .rotation3DEffect(
-                                                    Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
-                                                    axis: (x: 0, y: 2.5, z: 0)
-                                                )
-                                        }
-                                        .frame(width: 380, height: 600)
+                            if quizCardCategoriesModel.quizCardCategories.count != 0 {
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack(spacing: 20){
+                                        ForEach(quizCardCategoriesModel.quizCardCategories, id: \.quizCardCatId) { quizCard in
+                                            GeometryReader{ geometry in
+                                                CardView(title: quizCard.title, image: quizCard.image, colors: colors.randomElement()!, isFlashCard: false, flashCardCategory: FlashCardCategory(), quizCardCategory: quizCard)
+                                                    .rotation3DEffect(
+                                                        Angle(degrees: (Double(geometry.frame(in: .global).minX) - 80) / -30),
+                                                        axis: (x: 0, y: 2.5, z: 0)
+                                                    )
+                                            }
+                                            .frame(width: 380, height: 600)
 
-                                    }
-                                }.padding(80)
-                                Spacer()
+                                        }
+                                    }.padding(80)
+                                    Spacer()
+                                }
+                                .padding(.top, 80)
+                                .frame(width: UIScreen.main.bounds.width * 0.95, height: 600)
+                            } else {
+                                Text("There are currently no Quiz Card Categories. Click on the + button to add.")
+                                    .font(Font.custom("Noteworthy", size: 35).bold())
+                                    .foregroundColor(.white)
+                                    .frame(width: UIScreen.main.bounds.width * 0.65, height: 600, alignment: .center)
+                                    .offset(y: -40)
                             }
-                            .padding(.top, 80)
-                            .frame(width: UIScreen.main.bounds.width * 0.95, height: 600)
                         }
 
                     }
@@ -183,6 +201,11 @@ struct FlashQuizView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarHidden(true)
         .navigationBarTitle("", displayMode: .inline)
+        .onAppear(perform: {
+            displayName = Auth.auth().currentUser?.displayName ?? "Student"
+//            self.flashCardsCategories.fetchData(studentUID: Auth.auth().currentUser!.uid)
+//            self.quizCardCategoriesModel.fetchData(studentUID: Auth.auth().currentUser!.uid)
+        })
     }
     
     func calculateWidth() -> CGFloat{
@@ -194,6 +217,6 @@ struct FlashQuizView: View {
 
 struct FlashQuizView_Previews: PreviewProvider {
     static var previews: some View {
-        FlashQuizView()
+        FlashQuizView(flashCardsCategories: FlashCardCategories(), quizCardCategoriesModel: QuizCardCategories())
     }
 }

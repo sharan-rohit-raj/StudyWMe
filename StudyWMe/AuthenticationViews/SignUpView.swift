@@ -16,9 +16,15 @@ struct SignUpView: View {
     @State var dialogSuccessMessage = ""
     @State var isLogin = false
     @State var alertDialogType: AlertDialogType = .error
+    @State var firebaseAuth = FirebaseAuthentication()
+    private var db = Firestore.firestore()
     
     enum AlertDialogType {
         case success, error
+    }
+    
+    func getUser() {
+        firebaseAuth.listenForChangesInState()
     }
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -60,33 +66,57 @@ struct SignUpView: View {
                             withAnimation{
                                 self.isLogin.toggle()
                             }
-                            Auth.auth().createUser(withEmail: model.emailSignUp, password: model.passwordSignUp){ result, error in
+                            
+                            
+                            firebaseAuth.signUp(withEmail: model.emailSignUp, andPassword: model.passwordSignUp) { result, error in
                                 withAnimation{
                                     self.isLogin.toggle()
                                 }
                                 dialogErrorMessage = error?.localizedDescription ?? ""
                                 
-                                //Account was created successfully
                                 if dialogErrorMessage == ""{
-                                    //Send Verification Email
-                                    result?.user.sendEmailVerification(completion: { (error) in
-                                        dialogErrorMessage = error?.localizedDescription ?? ""
-                                        //Email verification was sent successfully
-                                        if dialogErrorMessage == ""{
-                                            self.dialogSuccessMessage = "Your account was created successfully. Please verify your email and login to your account."
-                                            alertDialogType = .success
-                                            self.showAlertDialog.toggle()
-                                        }else{
-                                            alertDialogType = .error
-                                            self.showAlertDialog.toggle()
-                                        }
-                                        
-                                    })
+                                    //Account was created successfully
+                                    let emailID = result?.user.email ?? ""
+                                    db.collection("students").document((result?.user.uid)!).setData(["emailID": emailID])
+                                    
+                                    alertDialogType = .success
+                                    self.showAlertDialog.toggle()
+                                    
                                 }else{
                                     alertDialogType = .error
                                     self.showAlertDialog.toggle()
                                 }
+                                
                             }
+                            
+                            
+//                            Auth.auth().createUser(withEmail: model.emailSignUp, password: model.passwordSignUp){ result, error in
+//                                withAnimation{
+//                                    self.isLogin.toggle()
+//                                }
+//                                dialogErrorMessage = error?.localizedDescription ?? ""
+//
+//                                //Account was created successfully
+//                                if dialogErrorMessage == ""{
+//                                    //Send Verification Email
+//                                    result?.user.sendEmailVerification(completion: { (error) in
+//                                        dialogErrorMessage = error?.localizedDescription ?? ""
+//                                        //Email verification was sent successfully
+//                                        if dialogErrorMessage == ""{
+//                                            self.dialogSuccessMessage = "Your account was created successfully. Please verify your email and login to your account."
+//                                            alertDialogType = .success
+//                                            self.showAlertDialog.toggle()
+//                                        }else{
+//                                            alertDialogType = .error
+//                                            self.showAlertDialog.toggle()
+//                                        }
+//
+//                                    })
+//                                }else{
+//                                    alertDialogType = .error
+//                                    self.showAlertDialog.toggle()
+//                                }
+//                            }
                         }
                     }, label: {
                         Text("Sign Up").font(Font.custom("Noteworthy", size: 20).bold())
@@ -113,9 +143,6 @@ struct SignUpView: View {
                         }
 
                     }
-//                    .alert(isPresented: $showSuccessAlertDialog){
-//                        Alert(title: Text("Sign Up Successful"), message: Text("Your account was created successfuly. Check your email for verification and login with your account."), dismissButton: .default(Text("Okay")))
-//                    }
                 }
                 Spacer(minLength: 0)
 
@@ -132,6 +159,7 @@ struct SignUpView: View {
                     .clipShape(Circle())
                     .padding(.top, 0.5)
             })
+            .onAppear(perform: getUser)
             
             if self.isLogin{
                 LoaderView()

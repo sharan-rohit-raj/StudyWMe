@@ -7,10 +7,20 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestoreSwift
 
-struct FlashCardCategory: Identifiable {
-     var id: Int = -1
+struct FlashCardCategory: Identifiable, Codable {
+     @DocumentID var id: String? = UUID().uuidString
+     var flashCardCarId: String = ""
      var title: String = ""
      var image: String = ""
      var flashCards: [FlashCardModel] = []
+    
+    enum CodingKeys : String, CodingKey {
+        case id
+        case flashCardCarId
+        case title
+        case image
+        case flashCards
+    }
 }

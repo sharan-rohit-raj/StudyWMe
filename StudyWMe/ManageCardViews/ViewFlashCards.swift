@@ -6,18 +6,19 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ViewFlashCards: View {
     @Environment(\.presentationMode) var presentationMode
     @State var title: String
     @State var isAddCardSheetShown: Bool = false
+    @State var flashCardCategory: FlashCardCategory
+    @ObservedObject var flashCards: FlashCards = FlashCards()
     
-    //Sample data
-    @State var flashCards: [FlashCardModel] = [FlashCardModel(id: 0, title: "What is my name?", details: "Sharan"),
-                                               FlashCardModel(id: 1, title: "What do I Study?", details: "Computer Science"),
-                                               FlashCardModel(id: 2, title: "Where do I live?", details: "Waterloo"),
-                                               FlashCardModel(id: 3, title: "What is my profession?", details: "Developer")]
-    //Sample Colors
+//    @State var flashCardsModel: [FlashCardModel] = [FlashCardModel]()
+    @State var isAddFlashCatClosed: Bool = false
+    
+    // Colors
     var colors: [Color] = [Color("DarkMagenta"), Color("LightOrchid"), Color("DarkPurple"), Color("LightPurple"),
     Color("Peach"), Color("KindaBlue"), Color("Sky"), Color("LightMagenta")]
 
@@ -42,6 +43,7 @@ struct ViewFlashCards: View {
                     .foregroundColor(Color("DarkPurple"))
                 Spacer()
                 Button(action : {
+                    self.isAddFlashCatClosed = false
                     self.isAddCardSheetShown.toggle()
                 }){
                     Image(systemName: "plus.circle.fill")
@@ -52,14 +54,14 @@ struct ViewFlashCards: View {
                         .padding(.top, 0.5)
                 }
                 .sheet(isPresented: $isAddCardSheetShown){
-                    AddFlashCardCategoryView(flashCardCat: title, isNewCat: false)
+                    AddFlashCardCategoryView(flashCardCat: $flashCardCategory, isNewCat: false, isAddFlashCatClosed: self.$isAddFlashCatClosed)
                 }
                 
             }
 
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 20){
-                    ForEach(flashCards) { flashCard in
+                    ForEach(self.flashCards.flashCards, id: \.flashCardId) { flashCard in
                         GeometryReader{ geometry in
                             AFlashCard(title: flashCard.title, details: flashCard.details, color: colors.randomElement()!)
                                 .rotation3DEffect(
@@ -75,13 +77,18 @@ struct ViewFlashCards: View {
             
             Spacer()
         }//VStack
-        
+        .onAppear(perform: {
+            print("View Flash Cards: OnAppear")
+            
+            self.flashCards.fetchFlashCardsData(studentUID: Auth.auth().currentUser!.uid, flashCardCategoryId: flashCardCategory.flashCardCarId)
+
+        })
 
     }//body
 }
 
 struct ViewFlashCards_Previews: PreviewProvider {
     static var previews: some View {
-        ViewFlashCards(title: "Hello")
+        ViewFlashCards(title: "Hello", flashCardCategory: FlashCardCategory())
     }
 }

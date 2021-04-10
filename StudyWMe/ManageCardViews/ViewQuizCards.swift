@@ -6,47 +6,19 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ViewQuizCards: View {
     @Environment(\.presentationMode) var presentationMode
     @State var title: String
     @State var isAddCardSheetShown: Bool = false
+    @State var quizCardCategory: QuizCardCategory
+    @ObservedObject var quizCards: QuizCards = QuizCards()
+//    @State var quizCardCategoryId: String
+
     
     //Sample data
-    @State var quizCards: [QuizCardModel] = [
-        QuizCardModel(
-            id: 0,
-            question: "What is my name?",
-            options: [QuizOptionsModel(id: 0, option: "Sharan"),
-                      QuizOptionsModel(id: 1, option: "Rohit"),
-                      QuizOptionsModel(id: 2, option: "Raj"),
-                      QuizOptionsModel(id: 3, option: "All of the above")],
-            correctOption: 3),
-        QuizCardModel(
-            id: 1,
-            question: "What is my favourite colour?",
-            options: [QuizOptionsModel(id: 0, option: "Pink"),
-                       QuizOptionsModel(id: 1, option: "Red"),
-                       QuizOptionsModel(id: 2, option: "Yellow"),
-                       QuizOptionsModel(id: 3, option: "Purple")],
-            correctOption: 3),
-        QuizCardModel(
-            id: 2,
-            question: "What is my favourite movie?",
-            options: [QuizOptionsModel(id: 0, option: "Avengers"),
-                       QuizOptionsModel(id: 1, option: "Tenet"),
-                       QuizOptionsModel(id: 2, option: "Master"),
-                       QuizOptionsModel(id: 3, option: "ABC")],
-            correctOption: 2),
-        QuizCardModel(
-            id: 3,
-            question: "What do I live?",
-            options: [QuizOptionsModel(id: 0, option: "Waterloo"),
-                       QuizOptionsModel(id: 1, option: "Mississauga"),
-                       QuizOptionsModel(id: 2, option: "Toronto"),
-                       QuizOptionsModel(id: 3, option: "Scarborough")],
-            correctOption: 0),
-    ]
+//    @State var quizCardsModel: [QuizCardModel] = [QuizCardModel]()
     
     var body: some View {
         VStack {
@@ -77,14 +49,14 @@ struct ViewQuizCards: View {
                         .padding(.top, 0.5)
                 }
                 .sheet(isPresented: $isAddCardSheetShown){
-                    AddQuizCardCategoryView(quizCardCat: title, isNewCat: false)
+                    AddQuizCardCategoryView(quizCardCat: $quizCardCategory, isNewCat: false)
                 }
                 
             }
 
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 20){
-                    ForEach(quizCards) { quizCard in
+                    ForEach(self.quizCards.quizCards, id: \.quizCardId) { quizCard in
                         GeometryReader{ geometry in
                             AQuizCard(question: quizCard.question, options: quizCard.options, correctOptionIndex: quizCard.correctOption)
                                 .rotation3DEffect(
@@ -100,12 +72,16 @@ struct ViewQuizCards: View {
             
             Spacer()
         }//VStack
+        .onAppear(perform: {
+//            self.quizCardsModel = self.quizCardCategory.quizCards
+            self.quizCards.fetchQuizCardsData(studentUID: Auth.auth().currentUser!.uid, quizCardCatId: self.quizCardCategory.quizCardCatId)
+        })
     }
     
 }
 
 struct ViewQuizCards_Previews: PreviewProvider {
     static var previews: some View {
-        ViewQuizCards(title: "Hello")
+        ViewQuizCards(title: "Hello", quizCardCategory: QuizCardCategory())
     }
 }

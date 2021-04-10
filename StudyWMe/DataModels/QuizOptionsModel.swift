@@ -6,7 +6,17 @@
 //
 
 import Foundation
-struct QuizOptionsModel: Identifiable {
-    var id: Int = -1
+import FirebaseFirestoreSwift
+
+struct QuizOptionsModel: Identifiable, Codable {
+    
+    @DocumentID var id: String? = UUID().uuidString
+    var optionID: String = ""
     var option: String = ""
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case optionID
+        case option
+    }
 }

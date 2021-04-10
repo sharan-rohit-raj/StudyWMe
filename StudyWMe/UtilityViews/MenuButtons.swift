@@ -15,7 +15,13 @@ struct MenuButtons: View {
     var animation: Namespace.ID
     @AppStorage("log_Status") var userStatus = true
     @State var isShowDialog = false
+    @State var firebaseAuth = FirebaseAuthentication()
+    @State var isLogOutSuccessful:Bool = false
+    @State var alertType: AlertType = .attemptToLogout
     
+    enum AlertType {
+        case errorLogout, attemptToLogout
+    }
     var body: some View {
         Button(action: {
             withAnimation(.spring()) {
@@ -24,6 +30,7 @@ struct MenuButtons: View {
                 //Sign out button was pressed
                 if selectedMenu == "" {
                     //Prompt dialog
+                    alertType = .attemptToLogout
                     self.isShowDialog.toggle()
                 }
             }
@@ -52,10 +59,21 @@ struct MenuButtons: View {
             )
             .cornerRadius(15)
         }).alert(isPresented: $isShowDialog){
-            Alert(title: Text("Sign Out"), message: Text("You are about to sign out. Do you wish to proceed?"), primaryButton: .default(Text("Yes")){
-                //Sign Out from Firebase
-                
-            }, secondaryButton: .destructive(Text("No")))
+            switch (alertType) {
+                case .attemptToLogout:
+                   return Alert(title: Text("Sign Out"), message: Text("You are about to sign out. Do you wish to proceed?"), primaryButton: .destructive(Text("No")),
+                          secondaryButton: .default(Text("Yes")){
+                            //Sign Out from Firebase
+                            isLogOutSuccessful = firebaseAuth.logout()
+                            if !isLogOutSuccessful {
+                                alertType = .errorLogout
+                                self.isShowDialog.toggle()
+                            }
+                          })
+                case .errorLogout:
+                    return Alert(title: Text("Log Out Error"), message: Text("Error occurred when trying to log out."), dismissButton: .default(Text("Okay")))
+            }
+
         }
     }
 }
