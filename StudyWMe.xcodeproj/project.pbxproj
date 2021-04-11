@@ -12,11 +12,9 @@
 		430B807B2612DCEE00FF8B40 /* FlashCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */; };
 		430B80802612DD3700FF8B40 /* QuizCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B807F2612DD3700FF8B40 /* QuizCardModel.swift */; };
 		430B80872612E36E00FF8B40 /* AddFlashCardCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80862612E36E00FF8B40 /* AddFlashCardCategoryView.swift */; };
-		430B80A62612F19000FF8B40 /* AddFlashCardCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80A52612F19000FF8B40 /* AddFlashCardCategoryModel.swift */; };
+		430B80A62612F19000FF8B40 /* ManageFlashCardCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80A52612F19000FF8B40 /* ManageFlashCardCategoryModel.swift */; };
 		430B80B02612F76300FF8B40 /* NavigationCustomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430B80AF2612F76300FF8B40 /* NavigationCustomizer.swift */; };
 		430FD7C2261FED1C00761BF8 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430FD7C1261FED1C00761BF8 /* NetworkMonitor.swift */; };
-		430FD7C7262008F500761BF8 /* ViewFlashCardsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430FD7C6262008F500761BF8 /* ViewFlashCardsModel.swift */; };
-		430FD7CC2620110600761BF8 /* ViewQuizCardsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430FD7CB2620110600761BF8 /* ViewQuizCardsModel.swift */; };
 		4313BF872603143900F6E522 /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313BF862603143900F6E522 /* FirebaseAuthentication.swift */; };
 		4313BF9826031A9000F6E522 /* FieldValidators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4313BF9726031A9000F6E522 /* FieldValidators.swift */; };
 		4314379E26215202004D6635 /* FlashCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4314379D26215202004D6635 /* FlashCards.swift */; };
@@ -31,7 +29,7 @@
 		435866E826119711001E3661 /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866E726119711001E3661 /* FeedbackModel.swift */; };
 		435866ED2611A4A4001E3661 /* AboutUsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435866EC2611A4A4001E3661 /* AboutUsModel.swift */; };
 		4390F70826191E2E0001D875 /* AddQuizCardCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F70726191E2E0001D875 /* AddQuizCardCategoryView.swift */; };
-		4390F70D26191EEA0001D875 /* AddQuizCardCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F70C26191EEA0001D875 /* AddQuizCardCategoryModel.swift */; };
+		4390F70D26191EEA0001D875 /* ManageQuizCardCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F70C26191EEA0001D875 /* ManageQuizCardCategoryModel.swift */; };
 		4390F73026192F610001D875 /* VisualEffectBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F72F26192F610001D875 /* VisualEffectBlur.swift */; };
 		4390F74426196E9F0001D875 /* ViewFlashCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F74326196E9F0001D875 /* ViewFlashCards.swift */; };
 		4390F74926196EAF0001D875 /* ViewQuizCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390F74826196EAF0001D875 /* ViewQuizCards.swift */; };
@@ -92,11 +90,9 @@
 		430B807A2612DCEE00FF8B40 /* FlashCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardModel.swift; sourceTree = "<group>"; };
 		430B807F2612DD3700FF8B40 /* QuizCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCardModel.swift; sourceTree = "<group>"; };
 		430B80862612E36E00FF8B40 /* AddFlashCardCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashCardCategoryView.swift; sourceTree = "<group>"; };
-		430B80A52612F19000FF8B40 /* AddFlashCardCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashCardCategoryModel.swift; sourceTree = "<group>"; };
+		430B80A52612F19000FF8B40 /* ManageFlashCardCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFlashCardCategoryModel.swift; sourceTree = "<group>"; };
 		430B80AF2612F76300FF8B40 /* NavigationCustomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCustomizer.swift; sourceTree = "<group>"; };
 		430FD7C1261FED1C00761BF8 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
-		430FD7C6262008F500761BF8 /* ViewFlashCardsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFlashCardsModel.swift; sourceTree = "<group>"; };
-		430FD7CB2620110600761BF8 /* ViewQuizCardsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewQuizCardsModel.swift; sourceTree = "<group>"; };
 		4313BF862603143900F6E522 /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		4313BF9726031A9000F6E522 /* FieldValidators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidators.swift; sourceTree = "<group>"; };
 		4314379D26215202004D6635 /* FlashCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCards.swift; sourceTree = "<group>"; };
@@ -111,7 +107,7 @@
 		435866E726119711001E3661 /* FeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModel.swift; sourceTree = "<group>"; };
 		435866EC2611A4A4001E3661 /* AboutUsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsModel.swift; sourceTree = "<group>"; };
 		4390F70726191E2E0001D875 /* AddQuizCardCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuizCardCategoryView.swift; sourceTree = "<group>"; };
-		4390F70C26191EEA0001D875 /* AddQuizCardCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuizCardCategoryModel.swift; sourceTree = "<group>"; };
+		4390F70C26191EEA0001D875 /* ManageQuizCardCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageQuizCardCategoryModel.swift; sourceTree = "<group>"; };
 		4390F72F26192F610001D875 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
 		4390F74326196E9F0001D875 /* ViewFlashCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFlashCards.swift; sourceTree = "<group>"; };
 		4390F74826196EAF0001D875 /* ViewQuizCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewQuizCards.swift; sourceTree = "<group>"; };
@@ -325,12 +321,10 @@
 				435866E226118CF7001E3661 /* ProfileModel.swift */,
 				435866E726119711001E3661 /* FeedbackModel.swift */,
 				435866EC2611A4A4001E3661 /* AboutUsModel.swift */,
-				430B80A52612F19000FF8B40 /* AddFlashCardCategoryModel.swift */,
-				4390F70C26191EEA0001D875 /* AddQuizCardCategoryModel.swift */,
+				430B80A52612F19000FF8B40 /* ManageFlashCardCategoryModel.swift */,
+				4390F70C26191EEA0001D875 /* ManageQuizCardCategoryModel.swift */,
 				43928389261E966500804CCE /* FlashCardCategories.swift */,
 				4392838E261E990A00804CCE /* QuizCardCategories.swift */,
-				430FD7C6262008F500761BF8 /* ViewFlashCardsModel.swift */,
-				430FD7CB2620110600761BF8 /* ViewQuizCardsModel.swift */,
 				4314379D26215202004D6635 /* FlashCards.swift */,
 				431437A226215CC4004D6635 /* QuizCards.swift */,
 			);
@@ -629,7 +623,6 @@
 				4314379E26215202004D6635 /* FlashCards.swift in Sources */,
 				430B803C2612CC8C00FF8B40 /* KeyboardGuardian.swift in Sources */,
 				43A05F5625FC630F00AA5073 /* AppDelegate.swift in Sources */,
-				430FD7CC2620110600761BF8 /* ViewQuizCardsModel.swift in Sources */,
 				4390F70826191E2E0001D875 /* AddQuizCardCategoryView.swift in Sources */,
 				4392838F261E990A00804CCE /* QuizCardCategories.swift in Sources */,
 				43C84549260E62B7001957F8 /* FeedbackView.swift in Sources */,
@@ -640,7 +633,7 @@
 				43C8452F260D95EC001957F8 /* MenuModel.swift in Sources */,
 				43C844F7260D6CCD001957F8 /* LoaderView.swift in Sources */,
 				43C84520260D8D35001957F8 /* MainView.swift in Sources */,
-				4390F70D26191EEA0001D875 /* AddQuizCardCategoryModel.swift in Sources */,
+				4390F70D26191EEA0001D875 /* ManageQuizCardCategoryModel.swift in Sources */,
 				432E468C260192330063D020 /* ForgotPasswordView.swift in Sources */,
 				435866E326118CF7001E3661 /* ProfileModel.swift in Sources */,
 				4313BF872603143900F6E522 /* FirebaseAuthentication.swift in Sources */,
@@ -648,7 +641,6 @@
 				43C8454E260E62CB001957F8 /* AboutUsView.swift in Sources */,
 				43C84501260D6F6F001957F8 /* SignUpModel.swift in Sources */,
 				430B80672612CF9A00FF8B40 /* GeometryGetter.swift in Sources */,
-				430FD7C7262008F500761BF8 /* ViewFlashCardsModel.swift in Sources */,
 				43A05F5825FC630F00AA5073 /* SceneDelegate.swift in Sources */,
 				432E467D260191320063D020 /* LoginView.swift in Sources */,
 				432E46AD2601A4160063D020 /* CustomTextField.swift in Sources */,
@@ -657,7 +649,7 @@
 				43C84506260D6F97001957F8 /* ForgotPasswordModel.swift in Sources */,
 				43A05F5A25FC630F00AA5073 /* ContentView.swift in Sources */,
 				43C84525260D8FAC001957F8 /* Drawer.swift in Sources */,
-				430B80A62612F19000FF8B40 /* AddFlashCardCategoryModel.swift in Sources */,
+				430B80A62612F19000FF8B40 /* ManageFlashCardCategoryModel.swift in Sources */,
 				43C84585260F8C26001957F8 /* FlashCardCategory.swift in Sources */,
 				432E4687260191F30063D020 /* SignUpView.swift in Sources */,
 				4390F74926196EAF0001D875 /* ViewQuizCards.swift in Sources */,

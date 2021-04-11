@@ -17,7 +17,9 @@ class FlashCardCategories: ObservableObject {
 //    FlashCardCategory(id: UUID().uuidString, title: "CP363", image: "raysFlashCard"),
 //    FlashCardCategory(id: UUID().uuidString, title: "CP3863", image: "sunsetFlashCard")]
     private var db = Firestore.firestore()
-
+    
+    /// Fetches all the quiz card categories
+    /// - Parameter studentUID: UID of the student
     func fetchData(studentUID: String) {
         db.collection("students").document(studentUID).collection("flashCardCategories").addSnapshotListener {(querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {

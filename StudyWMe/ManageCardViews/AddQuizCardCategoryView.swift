@@ -11,12 +11,13 @@ import Firebase
 struct AddQuizCardCategoryView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var id = 0
-    @Binding var quizCardCat: QuizCardCategory
+    @State var quizCardCatID: String
+    @State var quizCardCatTitle: String
     @State var isNewCat: Bool
     @State var quizCards: [QuizCardModel] = [QuizCardModel]()
     @State var quizCard: QuizCardModel = QuizCardModel()
     @State var quizOption: [QuizOptionsModel] = [QuizOptionsModel(id: "0", optionID: "0", option: ""), QuizOptionsModel(id: "1", optionID: "1", option: ""), QuizOptionsModel(id: "2", optionID: "2", option: ""), QuizOptionsModel(id: "3", optionID: "3", option: "")]
-    @StateObject var model: AddQuizCardCategoryModel = AddQuizCardCategoryModel()
+    @StateObject var model: ManageQuizCardCategoryModel = ManageQuizCardCategoryModel()
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 3)
     @State var isOptionsPressed:[Bool] = [false, false, false, false]
     @ObservedObject var monitor = NetworkMonitor()
@@ -26,6 +27,7 @@ struct AddQuizCardCategoryView: View {
     @State var isDialogSave = false
     @State var errorMessage = ""
     @State var isLoading = false
+    @State var studentUID = Auth.auth().currentUser?.uid
     
     enum AlertTypeAddMore {
         case categoryTitleEmpty, quizCardDetailsEmpty, connectionError, correctOptionNotChosen
@@ -74,7 +76,7 @@ struct AddQuizCardCategoryView: View {
                                     .background(GeometryGetter(rect: $kGuardian.rects[0]))
                             }
                             else{
-                                Text(quizCardCat.title)
+                                Text(quizCardCatTitle)
                                 .font(Font.custom("Noteworthy", size: 20))
                                 .foregroundColor(Color("DarkPurple"))
                             }
@@ -344,29 +346,42 @@ struct AddQuizCardCategoryView: View {
                                 model.quizCardCategory.quizCardCatId = model.quizCardCategory.id!
                                 model.quizCardCategory.image = self.randomImages.randomElement()!
                                 model.quizCardCategory.quizCards = self.quizCards
+                                
+                                model.saveQuizCategory(quizCardCategory: model.quizCardCategory, studentUID: studentUID!) { error in
+                                    self.isLoading.toggle()
+                                    errorMessage = error?.localizedDescription ?? ""
+                                    
+                                    if errorMessage == "" {
+                                        //Category was added
+                                        self.alertTypeSave = .success
+                                        self.isDialogSave.toggle()
+                                    }else{
+                                        //Error occurred while trying to save the category
+                                        self.alertTypeSave = .otherError
+                                        self.isDialogSave.toggle()
+                                    }
+                                }
 
                             }
                             // Student is adding quiz card in existing category
                             else{
                                 self.isLoading.toggle()
-                                quizCardCat.quizCards.append(contentsOf: self.quizCards)
-                                model.quizCardCategory = quizCardCat
-                            }
-                                
-                            model.saveQuizCategory(quizCardCategory: model.quizCardCategory, studentUID: Auth.auth().currentUser!.uid) { error in
-                                self.isLoading.toggle()
-                                errorMessage = error?.localizedDescription ?? ""
-                                
-                                if errorMessage == "" {
-                                    //Category was added
-                                    self.alertTypeSave = .success
-                                    self.isDialogSave.toggle()
-                                }else{
-                                    //Error occurred while trying to save the category
-                                    self.alertTypeSave = .otherError
-                                    self.isDialogSave.toggle()
+                                model.saveQuizCardInExistingCategory(quizCardCategoryID: self.quizCardCatID, quizCards: self.quizCards, studentUID: studentUID!) { error in
+                                    errorMessage = error?.localizedDescription ?? ""
+                                    
+                                    if errorMessage == "" {
+                                        //Category was added
+                                        self.alertTypeSave = .success
+                                        self.isDialogSave.toggle()
+                                    }else{
+                                        //Error occurred while trying to save the category
+                                        self.alertTypeSave = .otherError
+                                        self.isDialogSave.toggle()
+                                    }
                                 }
                             }
+                                
+
 
                             
                         }, label: {
@@ -419,6 +434,6 @@ struct AddQuizCardCategoryView: View {
 
 struct AddQuizCardCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        AddQuizCardCategoryView(quizCardCat: .constant(QuizCardCategory()), isNewCat: true)
+        AddQuizCardCategoryView(quizCardCatID: "",quizCardCatTitle: "", isNewCat: true)
     }
 }

@@ -11,17 +11,19 @@ import FirebaseFirestoreSwift
 
 class QuizCards: ObservableObject {
     @Published var quizCards = [QuizCardModel]()
+    @Published var quizCardCategory = QuizCardCategory()
     private var db = Firestore.firestore()
+    private var listener: ListenerRegistration?
     
     func fetchQuizCardsData(studentUID: String, quizCardCatId: String) {
-        db.collection("students").document(studentUID).collection("quizCardCategories").document(quizCardCatId).addSnapshotListener { (documentSnapshot, error) in
+        listener = db.collection("students").document(studentUID).collection("quizCardCategories").document(quizCardCatId).addSnapshotListener { (documentSnapshot, error) in
             guard let document = documentSnapshot else {
               print("Error fetching document: \(error!)")
               return
             }
             do{
-                let quizCardCategory = try document.data(as: QuizCardCategory.self)
-                self.quizCards = quizCardCategory?.quizCards ?? []
+                self.quizCardCategory = try document.data(as: QuizCardCategory.self) ?? QuizCardCategory()
+                self.quizCards = self.quizCardCategory.quizCards
 
             }catch{
                 print(error)
@@ -29,6 +31,12 @@ class QuizCards: ObservableObject {
             }
             
             
+        }
+    }
+    
+    func detachQuizCardsDataListener() {
+        if let listenerRegistration = listener {
+            listenerRegistration.remove()
         }
     }
 }

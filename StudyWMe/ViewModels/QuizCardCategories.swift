@@ -18,6 +18,8 @@ class QuizCardCategories: ObservableObject {
     
     private var db = Firestore.firestore()
     
+    /// Fetches all the quiz card categories
+    /// - Parameter studentUID: UID of the student
     func fetchData(studentUID: String) {
         db.collection("students").document(studentUID).collection("quizCardCategories").addSnapshotListener {(querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {

@@ -76,7 +76,7 @@ struct FlashQuizView: View {
                                         .padding(.top, 15)
                                 }
                                 .sheet(isPresented: $showAddCardCategory){
-                                    AddFlashCardCategoryView(flashCardCat: .constant(FlashCardCategory()), isNewCat: true, isAddFlashCatClosed: self.$isAddFlashCatClosed)
+                                    AddFlashCardCategoryView(flashCardCatID: "", flashCardTitle: "", isNewCat: true, isAddFlashCatClosed: self.$isAddFlashCatClosed)
                                 }
                                 .background(Color.white.opacity(0))
                                 
@@ -150,7 +150,7 @@ struct FlashQuizView: View {
                                         .padding(.top, 15)
                                 }
                                 .sheet(isPresented: $showAddQuizCardCategory){
-                                    AddQuizCardCategoryView(quizCardCat: .constant(QuizCardCategory()), isNewCat: true)
+                                    AddQuizCardCategoryView(quizCardCatID: "",quizCardCatTitle: "", isNewCat: true)
                                 }
                                 .background(Color.white.opacity(0))
                             }

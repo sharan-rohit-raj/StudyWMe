@@ -11,11 +11,12 @@ import Firebase
 struct AddFlashCardCategoryView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var id = 0
-    @Binding var flashCardCat: FlashCardCategory
+    @State var flashCardCatID: String
+    @State var flashCardTitle: String
     @State var isNewCat: Bool
     @State var flashCard: FlashCardModel = FlashCardModel()
     @State var flashCards: [FlashCardModel] = [FlashCardModel]()
-    @StateObject var model: AddFlashCardCategoryModel = AddFlashCardCategoryModel()
+    @ObservedObject var model: ManageFlashCardCategoryModel = ManageFlashCardCategoryModel()
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 3)
     @State var alertTypeAddMore: AlertTypeAddMore = .categoryTitleEmpty
     @State var alertTypeSave: AlertTypeSave = .success
@@ -71,7 +72,7 @@ struct AddFlashCardCategoryView: View {
                                     .background(GeometryGetter(rect: $kGuardian.rects[0]))
                             }
                             else{
-                                Text(flashCardCat.title)
+                                Text(self.flashCardTitle)
                                 .font(Font.custom("Noteworthy", size: 20))
                                 .foregroundColor(Color("DarkPurple"))
                             }
@@ -198,6 +199,10 @@ struct AddFlashCardCategoryView: View {
                                 self.alertTypeSave = .connectionError
                                 self.isDialogSave.toggle()
                             }
+                            if self.isNewCat && model.flashCardCategory.title.isEmpty {
+                                self.alertTypeSave = .categoryTitleEmpty
+                                self.isDialogSave.toggle()
+                            }
                             else if flashCards.isEmpty {
                                 //There are no flash cards to save
                                 self.alertTypeSave = .flashCardsEmpty
@@ -205,39 +210,48 @@ struct AddFlashCardCategoryView: View {
                             }
                             //Student is adding a new category
                             if isNewCat {
-                                if model.flashCardCategory.title.isEmpty {
-                                    self.alertTypeSave = .categoryTitleEmpty
-                                    self.isDialogSave.toggle()
-                                }else{
+                                self.isLoading.toggle()
+                                model.flashCardCategory.id = UUID().uuidString
+                                model.flashCardCategory.flashCardCarId = model.flashCardCategory.id!
+                                model.flashCardCategory.image = self.randomImages.randomElement()!
+                                model.flashCardCategory.flashCards = self.flashCards
+                                
+                                model.saveFlashCategory(flashCardCategory: model.flashCardCategory, studentUID: userID!) { error in
                                     self.isLoading.toggle()
-                                    model.flashCardCategory.id = UUID().uuidString
-                                    model.flashCardCategory.flashCardCarId = model.flashCardCategory.id!
-                                    model.flashCardCategory.image = self.randomImages.randomElement()!
-                                    model.flashCardCategory.flashCards = self.flashCards
+                                    errorMessage = error?.localizedDescription ?? ""
+                                    
+                                    if errorMessage == "" {
+                                        //Category was added
+                                        self.alertTypeSave = .success
+                                        self.isDialogSave.toggle()
+                                    }else{
+                                        //Error occurred while trying to save the category
+                                        self.alertTypeSave = .otherError
+                                        self.isDialogSave.toggle()
+                                    }
                                 }
                             }
+                            
                             //Student is adding card to an existing category
                             else{
                                 self.isLoading.toggle()
                                 //Add the new cards to the flash card category
-                                flashCardCat.flashCards.append(contentsOf: self.flashCards)
-                                model.flashCardCategory = flashCardCat
-                            }
-                            
-                            model.saveFlashCategory(flashCardCategory: model.flashCardCategory, studentUID: userID!) { error in
-                                self.isLoading.toggle()
-                                errorMessage = error?.localizedDescription ?? ""
-                                
-                                if errorMessage == "" {
-                                    //Category was added
-                                    self.alertTypeSave = .success
-                                    self.isDialogSave.toggle()
-                                }else{
-                                    //Error occurred while trying to save the category
-                                    self.alertTypeSave = .otherError
-                                    self.isDialogSave.toggle()
+                                model.saveNewFlashCardsInCategory(flashCardCategoryID: self.flashCardCatID, studentUID: userID!, flashCards: self.flashCards) { error in
+                                    errorMessage = error?.localizedDescription ?? ""
+                                    
+                                    if errorMessage == "" {
+                                        //Category was added
+                                        self.alertTypeSave = .success
+                                        self.isDialogSave.toggle()
+                                    }else{
+                                        //Error occurred while trying to save the category
+                                        self.alertTypeSave = .otherError
+                                        self.isDialogSave.toggle()
+                                    }
                                 }
                             }
+                            
+
                         }, label: {
                             Text("Save").font(Font.custom("Noteworthy", size: 20).bold())
                                 .foregroundColor(Color("DarkPurple"))
@@ -293,6 +307,6 @@ struct AddFlashCardCategoryView: View {
 
 struct AddFlashCardCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        AddFlashCardCategoryView(flashCardCat: .constant(FlashCardCategory()) , isNewCat: true, isAddFlashCatClosed: .constant(false))
+        AddFlashCardCategoryView(flashCardCatID: "", flashCardTitle: "", isNewCat: true, isAddFlashCatClosed: .constant(false))
     }
 }

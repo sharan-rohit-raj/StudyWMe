@@ -11,27 +11,33 @@ import FirebaseFirestoreSwift
 
 class FlashCards: ObservableObject {
     @Published var flashCards = [FlashCardModel]()
+    @Published var flashCardCategory = FlashCardCategory()
     private var db = Firestore.firestore()
+    private var listener: ListenerRegistration?
     
     func fetchFlashCardsData(studentUID: String, flashCardCategoryId: String) {
-        db.collection("students").document(studentUID).collection("flashCardCategories").document(flashCardCategoryId).addSnapshotListener { (documentSnapshot, error) in
+        listener = db.collection("students").document(studentUID)
+            .collection("flashCardCategories").document(flashCardCategoryId)
+            .addSnapshotListener { (documentSnapshot, error) in
             guard let document = documentSnapshot else {
               print("Error fetching document: \(error!)")
               return
             }
             do{
-                let flashCardCategory = try document.data(as: FlashCardCategory.self)
-                self.flashCards = flashCardCategory?.flashCards ?? []
+                self.flashCardCategory = try document.data(as: FlashCardCategory.self) ?? FlashCardCategory()
+                self.flashCards = self.flashCardCategory.flashCards
 
             }catch{
                 print(error)
                 return
             }
-            
-            
         }
-            
-
+    }
+    
+    func detachFlashCardsDataListener() {
+        if let listenerRegistration = listener {
+            listenerRegistration.remove()
+        }
     }
     
 }
