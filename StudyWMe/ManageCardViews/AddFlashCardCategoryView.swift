@@ -14,6 +14,9 @@ struct AddFlashCardCategoryView: View {
     @State var flashCardCatID: String
     @State var flashCardTitle: String
     @State var isNewCat: Bool
+    
+    var flashCardTitleLimit = 25
+    var flashCardDetailsLimit = 80
     @State var flashCard: FlashCardModel = FlashCardModel()
     @State var flashCards: [FlashCardModel] = [FlashCardModel]()
     @ObservedObject var model: ManageFlashCardCategoryModel = ManageFlashCardCategoryModel()
@@ -26,15 +29,16 @@ struct AddFlashCardCategoryView: View {
     @State var isLoading = false
     @ObservedObject var monitor = NetworkMonitor()
     @Binding var isAddFlashCatClosed: Bool
+    @State var shouldSave: Bool = true
     
     
     let userID = Auth.auth().currentUser?.uid
     
     enum AlertTypeAddMore {
-        case categoryTitleEmpty, flashCardDetailsEmpty, connectionError, otherError
+        case categoryTitleEmpty, flashCardDetailsEmpty, connectionError, otherError, titleTooLong, detailsTooLong
     }
     enum AlertTypeSave {
-        case categoryTitleEmpty, flashCardsEmpty, connectionError, otherError, success, successFlashCardAdd
+        case categoryTitleEmpty, flashCardsEmpty, connectionError, otherError, success, successFlashCardAdd, flashCardDetailsEmpty, titleTooLong, detailsTooLong
     }
     @State var randomImages: [String] = ["forestFlashCard",
                                           "moonFlashCard",
@@ -50,6 +54,51 @@ struct AddFlashCardCategoryView: View {
         flashCard.id = UUID().uuidString
         flashCard.title = ""
         flashCard.details = ""
+    }
+    
+    func saveFlashCardCategory() {
+        //Student is adding a new category
+        if isNewCat {
+            self.isLoading.toggle()
+            model.flashCardCategory.id = UUID().uuidString
+            model.flashCardCategory.flashCardCarId = model.flashCardCategory.id!
+            model.flashCardCategory.image = self.randomImages.randomElement()!
+            model.flashCardCategory.flashCards = self.flashCards
+            
+            model.saveFlashCategory(flashCardCategory: model.flashCardCategory, studentUID: userID!) { error in
+                self.isLoading.toggle()
+                errorMessage = error?.localizedDescription ?? ""
+                
+                if errorMessage == "" {
+                    //Category was added
+                    self.alertTypeSave = .success
+                    self.isDialogSave.toggle()
+                }else{
+                    //Error occurred while trying to save the category
+                    self.alertTypeSave = .otherError
+                    self.isDialogSave.toggle()
+                }
+            }
+        }
+        
+        //Student is adding card to an existing category
+        else{
+            self.isLoading.toggle()
+            //Add the new cards to the flash card category
+            model.saveNewFlashCardsInCategory(flashCardCategoryID: self.flashCardCatID, studentUID: userID!, flashCards: self.flashCards) { error in
+                errorMessage = error?.localizedDescription ?? ""
+                
+                if errorMessage == "" {
+                    //Category was added
+                    self.alertTypeSave = .success
+                    self.isDialogSave.toggle()
+                }else{
+                    //Error occurred while trying to save the category
+                    self.alertTypeSave = .otherError
+                    self.isDialogSave.toggle()
+                }
+            }
+        }
     }
     
     var body: some View {
@@ -161,7 +210,16 @@ struct AddFlashCardCategoryView: View {
                             else if flashCard.title.isEmpty || flashCard.details.isEmpty {
                                 self.alertTypeAddMore = .flashCardDetailsEmpty
                                 self.isShowDialogAddMore.toggle()
-                            }else{
+                            }
+                            else if flashCard.title.count > flashCardTitleLimit {
+                                self.alertTypeAddMore = .titleTooLong
+                                self.isShowDialogAddMore.toggle()
+                            }
+                            else if flashCard.details.count > flashCardDetailsLimit {
+                                self.alertTypeAddMore = .detailsTooLong
+                                self.isShowDialogAddMore.toggle()
+                            }
+                            else{
                                 //Add an Id to the flash card
                                 flashCard.id = UUID().uuidString
                                 flashCard.flashCardId = flashCard.id!
@@ -190,6 +248,10 @@ struct AddFlashCardCategoryView: View {
                                 return Alert(title: Text("Error"), message: Text("Please check if your device is connected to the network"), dismissButton: .default(Text("Okay")))
                             case .otherError:
                                 return Alert(title: Text("Error"), message: Text("We faced an error. Please try again."), dismissButton: .default(Text("Okay")))
+                            case .titleTooLong:
+                                return Alert(title: Text("Error"), message: Text("Your Title seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
+                            case .detailsTooLong:
+                                return Alert(title: Text("Error"), message: Text("Your Details seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
                             }
                         }
                         
@@ -197,61 +259,60 @@ struct AddFlashCardCategoryView: View {
                             //Save all the added flash cards
                             if !self.monitor.isConnected {
                                 self.alertTypeSave = .connectionError
+                                self.shouldSave = false
                                 self.isDialogSave.toggle()
                             }
-                            if self.isNewCat && model.flashCardCategory.title.isEmpty {
+                            
+                            else if self.isNewCat && model.flashCardCategory.title.isEmpty {
                                 self.alertTypeSave = .categoryTitleEmpty
+                                self.shouldSave = false
                                 self.isDialogSave.toggle()
                             }
-                            else if flashCards.isEmpty {
+                            
+                            //Check if student added any new flash card
+                            else if !flashCard.title.isEmpty || !flashCard.details.isEmpty {
+                                //Recheck all the details
+                                if flashCard.title.isEmpty || flashCard.details.isEmpty {
+                                    self.alertTypeSave = .flashCardDetailsEmpty
+                                    self.shouldSave = false
+                                    self.isDialogSave.toggle()
+                                }else if flashCard.title.count > flashCardTitleLimit {
+                                    self.alertTypeSave = .titleTooLong
+                                    self.shouldSave = false
+                                    self.isDialogSave.toggle()
+                                }
+                                else if flashCard.details.count > flashCardDetailsLimit {
+                                    self.alertTypeSave = .detailsTooLong
+                                    self.shouldSave = false
+                                    self.isDialogSave.toggle()
+                                }
+                                
+                                else{
+                                    //Add an Id to the flash card
+                                    flashCard.id = UUID().uuidString
+                                    flashCard.flashCardId = flashCard.id!
+                                    //Add the flash card to the array
+                                    flashCards.append(flashCard)
+                                    //Clear all the fields for new flash card
+                                    resetFlashCard()
+                                    self.shouldSave = true
+                                }
+                            }
+                           else if flashCards.isEmpty {
                                 //There are no flash cards to save
                                 self.alertTypeSave = .flashCardsEmpty
+                                self.shouldSave = false
                                 self.isDialogSave.toggle()
                             }
-                            //Student is adding a new category
-                            if isNewCat {
-                                self.isLoading.toggle()
-                                model.flashCardCategory.id = UUID().uuidString
-                                model.flashCardCategory.flashCardCarId = model.flashCardCategory.id!
-                                model.flashCardCategory.image = self.randomImages.randomElement()!
-                                model.flashCardCategory.flashCards = self.flashCards
-                                
-                                model.saveFlashCategory(flashCardCategory: model.flashCardCategory, studentUID: userID!) { error in
-                                    self.isLoading.toggle()
-                                    errorMessage = error?.localizedDescription ?? ""
-                                    
-                                    if errorMessage == "" {
-                                        //Category was added
-                                        self.alertTypeSave = .success
-                                        self.isDialogSave.toggle()
-                                    }else{
-                                        //Error occurred while trying to save the category
-                                        self.alertTypeSave = .otherError
-                                        self.isDialogSave.toggle()
-                                    }
-                                }
+                            
+                            
+                            // Save only if all details are checked
+                            if self.shouldSave {
+                                self.saveFlashCardCategory()
                             }
                             
-                            //Student is adding card to an existing category
-                            else{
-                                self.isLoading.toggle()
-                                //Add the new cards to the flash card category
-                                model.saveNewFlashCardsInCategory(flashCardCategoryID: self.flashCardCatID, studentUID: userID!, flashCards: self.flashCards) { error in
-                                    errorMessage = error?.localizedDescription ?? ""
-                                    
-                                    if errorMessage == "" {
-                                        //Category was added
-                                        self.alertTypeSave = .success
-                                        self.isDialogSave.toggle()
-                                    }else{
-                                        //Error occurred while trying to save the category
-                                        self.alertTypeSave = .otherError
-                                        self.isDialogSave.toggle()
-                                    }
-                                }
-                            }
                             
-
+                            
                         }, label: {
                             Text("Save").font(Font.custom("Noteworthy", size: 20).bold())
                                 .foregroundColor(Color("DarkPurple"))
@@ -279,7 +340,14 @@ struct AddFlashCardCategoryView: View {
                                 return Alert(title: Text("Success"), message: Text("Flash Cards were added to the category successfully"), dismissButton: .default(Text("Okay")) {
                                     self.mode.wrappedValue.dismiss()
                                 })
+                            case .flashCardDetailsEmpty:
+                                return Alert(title: Text("Error"), message: Text("Flash card title and/or details must not be left empty"), dismissButton: .default(Text("Okay")))
+                            case .titleTooLong:
+                                return Alert(title: Text("Error"), message: Text("Your Title seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
+                            case .detailsTooLong:
+                                return Alert(title: Text("Error"), message: Text("Your Details seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
                             }
+                            
                         }
                         .shadow(color: Color("LightPurple").opacity(0.5), radius: 10, x: 0, y: 10)
                     }

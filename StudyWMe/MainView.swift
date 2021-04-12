@@ -19,7 +19,9 @@ struct MainView: View {
     //Flash Card Category
     @ObservedObject var flashCardsCategories: FlashCardCategories = FlashCardCategories()
     @ObservedObject var quizCardCategoriesModel: QuizCardCategories = QuizCardCategories()
+    @ObservedObject var profileModel: ProfileModel = ProfileModel()
     @State var displayName = Auth.auth().currentUser?.displayName ?? "Student"
+    @State var studentUID = Auth.auth().currentUser?.uid
     var body: some View {
             ZStack {
                 GeometryReader{ geometry in
@@ -30,7 +32,7 @@ struct MainView: View {
                         TabView(selection: $menuModel.selectedMenu){
                             FlashQuizView(flashCardsCategories: flashCardsCategories, quizCardCategoriesModel: quizCardCategoriesModel )
                                 .tag("Home")
-                            ProfileView()
+                            ProfileView(model: self.profileModel)
                                 .tag("Profile")
                             FeedbackView()
                                 .tag("Feedback")
@@ -56,8 +58,15 @@ struct MainView: View {
             }//ZStack
             .onAppear {
                 displayName = Auth.auth().currentUser?.displayName ?? "Student"
-                self.flashCardsCategories.fetchData(studentUID: Auth.auth().currentUser!.uid)
-                self.quizCardCategoriesModel.fetchData(studentUID: Auth.auth().currentUser!.uid)
+                self.flashCardsCategories.fetchData(studentUID: studentUID!)
+                self.quizCardCategoriesModel.fetchData(studentUID: studentUID!)
+                self.profileModel.fetchProfileData(userUID: studentUID!)
+            }
+            .onDisappear {
+                //Detach all the listeners when you dont need them
+                self.flashCardsCategories.detachListenerForFlashCardCategories()
+                self.quizCardCategoriesModel.detachListenerForQuizCardCategories()
+                self.profileModel.detachProfileDataListener()
             }
         
     }

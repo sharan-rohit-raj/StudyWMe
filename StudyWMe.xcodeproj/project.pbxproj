@@ -45,6 +45,7 @@
 		43A05F6225FC631000AA5073 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43A05F6025FC631000AA5073 /* LaunchScreen.storyboard */; };
 		43A05F6D25FC631100AA5073 /* StudyWMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F6C25FC631100AA5073 /* StudyWMeTests.swift */; };
 		43A05F7825FC631100AA5073 /* StudyWMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F7725FC631100AA5073 /* StudyWMeUITests.swift */; };
+		43B448752623D6F100A5BF4E /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B448742623D6F100A5BF4E /* MailView.swift */; };
 		43C844F7260D6CCD001957F8 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C844F6260D6CCD001957F8 /* LoaderView.swift */; };
 		43C844FC260D6E79001957F8 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C844FB260D6E79001957F8 /* LoginModel.swift */; };
 		43C84501260D6F6F001957F8 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84500260D6F6F001957F8 /* SignUpModel.swift */; };
@@ -130,6 +131,7 @@
 		43A05F7725FC631100AA5073 /* StudyWMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyWMeUITests.swift; sourceTree = "<group>"; };
 		43A05F7925FC631100AA5073 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43AF960DB7106E54AA1EF69E /* Pods-StudyWMe-StudyWMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyWMe-StudyWMeUITests.release.xcconfig"; path = "Target Support Files/Pods-StudyWMe-StudyWMeUITests/Pods-StudyWMe-StudyWMeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		43B448742623D6F100A5BF4E /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		43C844F6260D6CCD001957F8 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		43C844FB260D6E79001957F8 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		43C84500260D6F6F001957F8 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				43C84524260D8FAC001957F8 /* Drawer.swift */,
 				43C84529260D9509001957F8 /* MenuButtons.swift */,
 				430B80662612CF9A00FF8B40 /* GeometryGetter.swift */,
+				43B448742623D6F100A5BF4E /* MailView.swift */,
 			);
 			path = UtilityViews;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				430B80802612DD3700FF8B40 /* QuizCardModel.swift in Sources */,
 				4314379E26215202004D6635 /* FlashCards.swift in Sources */,
 				430B803C2612CC8C00FF8B40 /* KeyboardGuardian.swift in Sources */,
+				43B448752623D6F100A5BF4E /* MailView.swift in Sources */,
 				43A05F5625FC630F00AA5073 /* AppDelegate.swift in Sources */,
 				4390F70826191E2E0001D875 /* AddQuizCardCategoryView.swift in Sources */,
 				4392838F261E990A00804CCE /* QuizCardCategories.swift in Sources */,

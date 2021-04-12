@@ -10,7 +10,7 @@ import Firebase
 import Network
 
 struct ProfileView: View {
-    @StateObject var model : ProfileModel = ProfileModel()
+    @ObservedObject var model : ProfileModel
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 1)
     @State var emailID: String = Auth.auth().currentUser?.email ?? ""
     @State var showAlert: Bool = false
@@ -18,6 +18,7 @@ struct ProfileView: View {
     @State var displayNameError: String = ""
     @State var isLoading = false
     @ObservedObject var monitor = NetworkMonitor()
+    @State var tryintoEditEmail: Bool = false
     
     enum AlertType {
         case emptyField, invalidPhoneNumber, noNetwork, errorOccured, successSave, displayNameUpdateError
@@ -68,6 +69,12 @@ struct ProfileView: View {
                         .background(GeometryGetter(rect: $kGuardian.rects[0]))
                         
                     }.padding(.top, (UIScreen.main.bounds.height * 0.5) - 430)
+                    .onTapGesture {
+                        self.tryintoEditEmail.toggle()
+                    }
+                    .alert(isPresented: $tryintoEditEmail) {
+                        return Alert(title: Text("Error"), message: Text("Cannot edit email field. As of now it's for viewing purposes only."), dismissButton: .default(Text("Okay")))
+                    }
                     
                     Button(action: {
                         //Check for validation
@@ -165,6 +172,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(model: ProfileModel())
     }
 }

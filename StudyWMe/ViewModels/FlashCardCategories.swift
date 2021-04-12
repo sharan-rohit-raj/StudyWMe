@@ -10,18 +10,13 @@ import FirebaseFirestore
 
 class FlashCardCategories: ObservableObject {
     @Published var flashCardCategories: [FlashCardCategory] =  [FlashCardCategory]()
-    
-    //[FlashCardCategory(id: UUID().uuidString, title: "CP373", image: "forestFlashCard"),
-//    FlashCardCategory(id: UUID().uuidString, title: "CP372",image: "moonFlashCard"),
-//    FlashCardCategory(id: UUID().uuidString, title: "CP351", image: "orangeTreeFlashCard"),
-//    FlashCardCategory(id: UUID().uuidString, title: "CP363", image: "raysFlashCard"),
-//    FlashCardCategory(id: UUID().uuidString, title: "CP3863", image: "sunsetFlashCard")]
     private var db = Firestore.firestore()
+    private var listener: ListenerRegistration?
     
     /// Fetches all the quiz card categories
     /// - Parameter studentUID: UID of the student
     func fetchData(studentUID: String) {
-        db.collection("students").document(studentUID).collection("flashCardCategories").addSnapshotListener {(querySnapshot, error) in
+        listener = db.collection("students").document(studentUID).collection("flashCardCategories").addSnapshotListener {(querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("There were no flash card categories")
                 return
@@ -30,6 +25,13 @@ class FlashCardCategories: ObservableObject {
             self.flashCardCategories = documents.compactMap{(queryDocumentSnapshot) -> FlashCardCategory? in
                 return try? queryDocumentSnapshot.data(as: FlashCardCategory.self)
             }
+        }
+    }
+    
+    /// Detach the listener when you dont need real time updates
+    func detachListenerForFlashCardCategories() {
+        if let listenerRegistration = listener {
+            listenerRegistration.remove()
         }
     }
 }

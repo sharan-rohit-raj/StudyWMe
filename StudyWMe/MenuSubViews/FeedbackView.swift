@@ -6,10 +6,21 @@
 //
 
 import SwiftUI
+import MessageUI
+import Firebase
 
 struct FeedbackView: View {
     @StateObject var model: FeedbackModel = FeedbackModel(limit: 500)
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 1)
+    @State var isSheetShown: Bool = false
+    @ObservedObject var monitor = NetworkMonitor()
+    @State var isDialogShown: Bool = false
+    @State var alertType: AlertType = .success
+    @State var result: Result<MFMailComposeResult, Error>? = nil
+    
+    enum AlertType {
+        case networkError, otherError, success, feedBackEmpty
+    }
     var body: some View {
         NavigationView{
                 VStack{
@@ -43,15 +54,49 @@ struct FeedbackView: View {
                         .foregroundColor(Color("DarkPurple"))
                         .offset(x: 20, y: 0)
                     
-                    Button(action: {}, label: {
-                        Text("Send").font(Font.custom("Noteworthy", size: 20).bold())
+                    Button(action: {
+                        if self.monitor.isConnected {
+                            if !self.model.feedback.isEmpty {
+                                //Open the mail sheet
+                                if MFMailComposeViewController.canSendMail() {
+                                    self.isSheetShown.toggle()
+                                }else{
+                                    self.alertType = .otherError
+                                    self.isDialogShown.toggle()
+                                }
+                                
+                            }else{
+                                self.alertType = .feedBackEmpty
+                                self.isDialogShown.toggle()
+                            }
+                        }else{
+                            self.alertType = .networkError
+                            self.isDialogShown.toggle()
+                        }
+                    }, label: {
+                        Text("Open Email To Send").font(Font.custom("Noteworthy", size: 20).bold())
                             .foregroundColor(Color.white)
                             .padding(.vertical)
                             .frame(width: UIScreen.main.bounds.width - 30)
                             .background(Color("DarkPurple"))
                             .clipShape(Capsule())
-                    }).padding(.top, UIScreen.main.bounds.height * 0.1)
-                    
+                    })
+                    .padding(.top, UIScreen.main.bounds.height * 0.1)
+                    .alert(isPresented: $isDialogShown) {
+                        switch(self.alertType) {
+                        case .networkError:
+                            return Alert(title: Text("Error"), message: Text("Please check if your device is connected to the internet and try again"), dismissButton: .default(Text("Okay")))
+                        case .otherError:
+                            return Alert(title: Text("Error"), message: Text("Looks like this device cannot send emails"), dismissButton: .default(Text("Okay")))
+                        case .success:
+                            return Alert(title: Text("Success"), message: Text("Thank you for your feedback"), dismissButton: .default(Text("Okay")))
+                        case .feedBackEmpty:
+                            return Alert(title: Text("Error"), message: Text("Please don't leave the feedback empty"), dismissButton: .default(Text("Okay")))
+                        }
+                    }
+                    .sheet(isPresented: $isSheetShown) {
+                        MailView(isShowing: $isSheetShown, result: self.$result, subject: "Feedback from \(Auth.auth().currentUser?.email ?? "Student")", messageBody: model.feedback)
+                    }
                     Spacer()
                 }
                 .ignoresSafeArea(edges: .top)

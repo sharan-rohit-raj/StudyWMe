@@ -110,23 +110,27 @@ struct DrawerCloseButton: View{
                 menuModel.showDrawer.toggle()
             }
         }, label: {
-            VStack(spacing: 5){
-                Capsule()
-                    .fill(menuModel.showDrawer ? Color.white : Color("DarkPurple"))
-                    .frame(width: 35, height: 3)
-                    .rotationEffect(.init(degrees: menuModel.showDrawer ? -50 : 0))
-                    .offset(x: menuModel.showDrawer ? 2 : 0, y: menuModel.showDrawer ? 9 : 0)
-                VStack(spacing: 5){
-                    Capsule()
-                        .fill(menuModel.showDrawer ? Color.white : Color("DarkPurple"))
-                        .frame(width: 35, height: 3)
-                    Capsule()
-                        .fill(menuModel.showDrawer ? Color.white : Color("DarkPurple"))
-                        .frame(width: 35, height: 3)
-                        .offset(y: menuModel.showDrawer ? -8 : 0)
-                }
-                .rotationEffect(.init(degrees: menuModel.showDrawer ? 50 : 0))
-            }
+            Image(systemName: menuModel.showDrawer ? "xmark" : "line.horizontal.3")
+                .resizable()
+                .frame(width: 35, height: menuModel.showDrawer ? 35 : 25)
+                .foregroundColor(menuModel.showDrawer ? Color.white : Color("DarkPurple"))
+//            VStack(spacing: 5){
+//                Capsule()
+//                    .fill(menuModel.showDrawer ? Color.white : Color("DarkPurple"))
+//                    .frame(width: 35, height: 3)
+//                    .rotationEffect(.init(degrees: menuModel.showDrawer ? -50 : 0))
+//                    .offset(x: menuModel.showDrawer ? 2 : 0, y: menuModel.showDrawer ? 9 : 0)
+//                VStack(spacing: 5){
+//                    Capsule()
+//                        .fill(menuModel.showDrawer ? Color.white : Color("DarkPurple"))
+//                        .frame(width: 35, height: 3)
+//                    Capsule()
+//                        .fill(menuModel.showDrawer ? Color.white : Color("DarkPurple"))
+//                        .frame(width: 35, height: 3)
+//                        .offset(y: menuModel.showDrawer ? -8 : 0)
+//                }
+//                .rotationEffect(.init(degrees: menuModel.showDrawer ? 50 : 0))
+//            }
         })
         .scaleEffect(0.8)
         .matchedGeometryEffect(id: "MENU_BTN", in: animation)

@@ -10,8 +10,14 @@ import Firebase
 import FirebaseFirestoreSwift
 
 class ManageQuizCardCategoryModel: ObservableObject {
-    
-    @Published var quizCardCategory: QuizCardCategory = QuizCardCategory(id: UUID().uuidString, title: "", image: "", quizCards: [QuizCardModel]())
+    private let quizCardCategoryTitleLimit = 30
+    @Published var quizCardCategory: QuizCardCategory = QuizCardCategory(id: UUID().uuidString, title: "", image: "", quizCards: [QuizCardModel]()) {
+        didSet{
+            if quizCardCategory.title.count > quizCardCategoryTitleLimit {
+                quizCardCategory.title = String(quizCardCategory.title.prefix(quizCardCategoryTitleLimit))
+            }
+        }
+    }
     private var db = Firestore.firestore()
     
 

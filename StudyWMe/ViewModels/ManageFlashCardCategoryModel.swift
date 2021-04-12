@@ -11,7 +11,14 @@ import FirebaseFirestoreSwift
 
 /// Class that manges flash card category related stuff
 class ManageFlashCardCategoryModel: ObservableObject {
-    @Published var flashCardCategory: FlashCardCategory = FlashCardCategory(id: UUID().uuidString, flashCardCarId: "", title: "", image: "", flashCards: [FlashCardModel]())
+    private var categorytitleLimit = 30
+    @Published var flashCardCategory: FlashCardCategory = FlashCardCategory(id: UUID().uuidString, flashCardCarId: "", title: "", image: "", flashCards: [FlashCardModel]()) {
+        didSet{
+            if flashCardCategory.title.count > categorytitleLimit {
+                flashCardCategory.title = String(flashCardCategory.title.prefix(categorytitleLimit))
+            }
+        }
+    }
     private var db = Firestore.firestore()
     
     private var randomImages: [String] = ["forestFlashCard",

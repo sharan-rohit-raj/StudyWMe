@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct CardView: View {
     @State var title:String
@@ -16,6 +17,50 @@ struct CardView: View {
     @State var flashCardCategory: FlashCardCategory
     @State var quizCardCategory: QuizCardCategory
     @State var isLongPressed: Bool = false
+    @ObservedObject var manageQuizCardCardCategory: ManageQuizCardCategoryModel = ManageQuizCardCategoryModel()
+    @ObservedObject var manageFlashCardCategory: ManageFlashCardCategoryModel = ManageFlashCardCategoryModel()
+    @State var studentUID = Auth.auth().currentUser?.uid
+    @State var dialogMessage = ""
+    @State var showDialog = false
+    @State var alertType:AlertType = .successCategoryDelete
+    @State var monitor: NetworkMonitor = NetworkMonitor()
+    
+    enum AlertType {
+        case confirmation, successCategoryDelete, error, networkError
+    }
+    
+    func deleteCategory() {
+        //Delete the flash card category
+        if isFlashCard{
+            manageFlashCardCategory.deleteFlashCardCategory(flashCardCategoryID: flashCardCategory.flashCardCarId, studentUID: studentUID!) { error in
+                dialogMessage = error?.localizedDescription ?? ""
+                
+                if dialogMessage == "" {
+                    self.alertType = .successCategoryDelete
+                    self.showDialog.toggle()
+                }else{
+                    //Error occured while deleting
+                    self.alertType = .error
+                    self.showDialog.toggle()
+                }
+            }
+        }
+        //Delete the quiz card category
+        else{
+            manageQuizCardCardCategory.deleteQuizCardCategory(quizCardCategoryID: quizCardCategory.quizCardCatId, studentUID: studentUID!) { error in
+                dialogMessage = error?.localizedDescription ?? ""
+                
+                if dialogMessage == "" {
+                    self.alertType = .successCategoryDelete
+                    self.showDialog.toggle()
+                }else{
+                    //Error occured while deleting
+                    self.alertType = .error
+                    self.showDialog.toggle()
+                }
+            }
+        }
+    }
     
     
     var body: some View {
@@ -33,7 +78,15 @@ struct CardView: View {
                     .shadow(color: .black, radius: 10, x: 0.0, y: 0.0)
             }else{
                 Button(action: {
-                   print("Delete \(title)")
+                    if monitor.isConnected {
+                        alertType = .confirmation
+                        self.showDialog.toggle()
+                    }
+                    else{
+                        alertType = .networkError
+                        self.showDialog.toggle()
+                    }
+
                 }, label: {
                     HStack(spacing: 20) {
                         Image(systemName: "trash")
@@ -51,6 +104,25 @@ struct CardView: View {
                     .background(Color.red)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                 })
+                .alert(isPresented: $showDialog) {
+                    switch(alertType){
+                    case .successCategoryDelete:
+                        return Alert(title: Text("Success"), message: Text("Category was deleted successfully"), dismissButton: .default(Text("Okay")))
+                    case .error:
+                        return Alert(title: Text("Error"), message: Text("Error occurred while deleting"), dismissButton: .default(Text("Okay")))
+                    case .confirmation:
+                        return Alert(title: Text("Confirmation"), message: Text("Are you sure that you wish to delete this category?"), primaryButton: .default(Text("No")) {
+                            self.isLongPressed.toggle()
+                        }, secondaryButton: .destructive(Text("Yes")) {
+                            self.deleteCategory()
+                        })
+                    case .networkError:
+                        return Alert(title: Text("Error"), message: Text("Please check if your device is connected to the internet and try again."), dismissButton: .default(Text("Okay")) {
+                            self.isLongPressed.toggle()
+                        })
+                        
+                    }
+                }
             }
 
         }

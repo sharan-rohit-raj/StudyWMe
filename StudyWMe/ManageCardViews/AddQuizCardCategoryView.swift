@@ -15,6 +15,8 @@ struct AddQuizCardCategoryView: View {
     @State var quizCardCatTitle: String
     @State var isNewCat: Bool
     @State var quizCards: [QuizCardModel] = [QuizCardModel]()
+    var quizCardQuestionLimit = 25
+    var quizCardOptionLimit = 25
     @State var quizCard: QuizCardModel = QuizCardModel()
     @State var quizOption: [QuizOptionsModel] = [QuizOptionsModel(id: "0", optionID: "0", option: ""), QuizOptionsModel(id: "1", optionID: "1", option: ""), QuizOptionsModel(id: "2", optionID: "2", option: ""), QuizOptionsModel(id: "3", optionID: "3", option: "")]
     @StateObject var model: ManageQuizCardCategoryModel = ManageQuizCardCategoryModel()
@@ -28,23 +30,24 @@ struct AddQuizCardCategoryView: View {
     @State var errorMessage = ""
     @State var isLoading = false
     @State var studentUID = Auth.auth().currentUser?.uid
+    @State var shouldSave: Bool = true
     
     enum AlertTypeAddMore {
-        case categoryTitleEmpty, quizCardDetailsEmpty, connectionError, correctOptionNotChosen
+        case categoryTitleEmpty, quizCardDetailsEmpty, connectionError, correctOptionNotChosen, questionTooLong, optionTooLong
     }
     enum AlertTypeSave {
-        case categoryTitleEmpty, quizCardsEmpty, connectionError, otherError, success
+        case categoryTitleEmpty, quizCardsEmpty, connectionError, otherError, success, quizCardDetailsEmpty, questionTooLong, optionTooLong
     }
     
     @State var randomImages: [String] = ["forestFlashCard",
-                                          "moonFlashCard",
-                                          "orangeTreeFlashCard",
-                                          "raysFlashCard",
-                                          "sunsetFlashCard",
-                                          "moonBuilding",
-                                          "tallBuilding",
-                                          "torontoBuilding",
-                                          "foggyBuilding"]
+                                         "moonFlashCard",
+                                         "orangeTreeFlashCard",
+                                         "raysFlashCard",
+                                         "sunsetFlashCard",
+                                         "moonBuilding",
+                                         "tallBuilding",
+                                         "torontoBuilding",
+                                         "foggyBuilding"]
     
     func resetQuizCard() {
         quizCard.id = UUID().uuidString
@@ -53,6 +56,50 @@ struct AddQuizCardCategoryView: View {
         quizCard.correctOption = "0"
         quizOption = [QuizOptionsModel(id: "0", optionID: "0", option: ""), QuizOptionsModel(id: "1", optionID: "1", option: ""), QuizOptionsModel(id: "2", optionID: "2", option: ""), QuizOptionsModel(id: "3", optionID: "3", option: "")]
         isOptionsPressed = [false, false, false, false]
+    }
+    
+    func saveQuizCardCategory() {
+        //Student is adding new quiz card cat
+        if isNewCat {
+            self.isLoading.toggle()
+            model.quizCardCategory.id = UUID().uuidString
+            model.quizCardCategory.quizCardCatId = model.quizCardCategory.id!
+            model.quizCardCategory.image = self.randomImages.randomElement()!
+            model.quizCardCategory.quizCards = self.quizCards
+            
+            model.saveQuizCategory(quizCardCategory: model.quizCardCategory, studentUID: studentUID!) { error in
+                self.isLoading.toggle()
+                errorMessage = error?.localizedDescription ?? ""
+                
+                if errorMessage == "" {
+                    //Category was added
+                    self.alertTypeSave = .success
+                    self.isDialogSave.toggle()
+                }else{
+                    //Error occurred while trying to save the category
+                    self.alertTypeSave = .otherError
+                    self.isDialogSave.toggle()
+                }
+            }
+            
+        }
+        // Student is adding quiz card in existing category
+        else{
+            self.isLoading.toggle()
+            model.saveQuizCardInExistingCategory(quizCardCategoryID: self.quizCardCatID, quizCards: self.quizCards, studentUID: studentUID!) { error in
+                errorMessage = error?.localizedDescription ?? ""
+                
+                if errorMessage == "" {
+                    //Category was added
+                    self.alertTypeSave = .success
+                    self.isDialogSave.toggle()
+                }else{
+                    //Error occurred while trying to save the category
+                    self.alertTypeSave = .otherError
+                    self.isDialogSave.toggle()
+                }
+            }
+        }
     }
     
     var body: some View {
@@ -77,21 +124,21 @@ struct AddQuizCardCategoryView: View {
                             }
                             else{
                                 Text(quizCardCatTitle)
-                                .font(Font.custom("Noteworthy", size: 20))
-                                .foregroundColor(Color("DarkPurple"))
+                                    .font(Font.custom("Noteworthy", size: 20))
+                                    .foregroundColor(Color("DarkPurple"))
                             }
-
+                            
                         }
-                            .padding(.horizontal)
-
+                        .padding(.horizontal)
+                        
                         .frame(width: UIScreen.main.bounds.width * 0.7, height: 60)
                         .background(Color.white)
-                            .clipShape(Capsule())
+                        .clipShape(Capsule())
                     }
                     .shadow(color: Color("LightPurple"), radius: 10, x: 0, y: 10)
                     .padding(.horizontal)
                     .padding(.top, 80)
-                        
+                    
                     //Quiz Card
                     ZStack{
                         VStack{
@@ -106,14 +153,14 @@ struct AddQuizCardCategoryView: View {
                                         .font(Font.custom("Noteworthy", size: 18))
                                         .foregroundColor(Color("DarkPurple"))
                                 }
-                                    .padding(.horizontal)
-
-                                    .frame(height: 60)
+                                .padding(.horizontal)
+                                
+                                .frame(height: 60)
                                 .background(Color("LightPurple").opacity(0.175))
-                                    .clipShape(Capsule())
+                                .clipShape(Capsule())
                             }
                             .padding(.horizontal)
-
+                            
                             Text("Quiz Card Options")
                                 .font(Font.custom("Noteworthy", size: 18))
                                 .foregroundColor(Color("DarkPurple"))
@@ -140,7 +187,7 @@ struct AddQuizCardCategoryView: View {
                                                 .frame(width: 25, height: 25)
                                                 .foregroundColor(Color.green)
                                         }
-                                            
+                                        
                                     }
                                 }
                                 .padding(.horizontal)
@@ -149,7 +196,7 @@ struct AddQuizCardCategoryView: View {
                                 .clipShape(Capsule())
                             }
                             .padding(.horizontal)
-
+                            
                             ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)){
                                 HStack{
                                     TextField("Option 2", text: $quizOption[1].option)
@@ -169,17 +216,17 @@ struct AddQuizCardCategoryView: View {
                                                 .frame(width: 25, height: 25)
                                                 .foregroundColor(Color.green)
                                         }
-                                            
+                                        
                                     }
                                 }
-                                    .padding(.horizontal)
-
-                                    .frame(height: 60)
+                                .padding(.horizontal)
+                                
+                                .frame(height: 60)
                                 .background(isOptionsPressed[1] ? Color.green.opacity(0.175): Color("LightPurple").opacity(0.175))
-                                    .clipShape(Capsule())
+                                .clipShape(Capsule())
                             }
                             .padding(.horizontal)
-    
+                            
                             ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)){
                                 HStack{
                                     TextField("Option 3", text: $quizOption[2].option)
@@ -199,17 +246,17 @@ struct AddQuizCardCategoryView: View {
                                                 .frame(width: 25, height: 25)
                                                 .foregroundColor(Color.green)
                                         }
-                                            
+                                        
                                     }
                                 }
-                                    .padding(.horizontal)
-
-                                    .frame(height: 60)
+                                .padding(.horizontal)
+                                
+                                .frame(height: 60)
                                 .background(isOptionsPressed[2] ? Color.green.opacity(0.175): Color("LightPurple").opacity(0.175))
-                                    .clipShape(Capsule())
+                                .clipShape(Capsule())
                             }
                             .padding(.horizontal)
-
+                            
                             ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)){
                                 HStack{
                                     TextField("Option 4", text: $quizOption[3].option)
@@ -229,17 +276,17 @@ struct AddQuizCardCategoryView: View {
                                                 .frame(width: 25, height: 25)
                                                 .foregroundColor(Color.green)
                                         }
-                                            
+                                        
                                     }
                                 }
-                                    .padding(.horizontal)
-
-                                    .frame(height: 60)
+                                .padding(.horizontal)
+                                
+                                .frame(height: 60)
                                 .background(isOptionsPressed[3] ? Color.green.opacity(0.175): Color("LightPurple").opacity(0.175))
-                                    .clipShape(Capsule())
+                                .clipShape(Capsule())
                             }
                             .padding(.horizontal)
-
+                            
                             Text("Note: Please press on the correct option's circle button")
                                 .lineLimit(2)
                                 .font(Font.custom("Noteworthy", size: 14).bold())
@@ -249,7 +296,7 @@ struct AddQuizCardCategoryView: View {
                                 .padding(.top, 10)
                             
                         }//VStack
-
+                        
                     }//ZStack
                     .frame(width: 500, height: 600)
                     .background(Color.white)
@@ -283,7 +330,19 @@ struct AddQuizCardCategoryView: View {
                                 self.alertTypeAddMore = .quizCardDetailsEmpty
                                 self.isShowDialogAddMore.toggle()
                                 
-                            }else if self.isOptionsPressed == [false, false, false, false] {
+                            }else if quizCard.question.count > self.quizCardQuestionLimit {
+                                self.alertTypeAddMore = .questionTooLong
+                                self.isShowDialogAddMore.toggle()
+                                
+                            }else if quizOption[0].option.count > self.quizCardOptionLimit ||
+                                        quizOption[1].option.count > self.quizCardOptionLimit ||
+                                        quizOption[2].option.count > self.quizCardOptionLimit ||
+                                        quizOption[3].option.count > self.quizCardOptionLimit{
+                                
+                                self.alertTypeAddMore = .optionTooLong
+                                self.isShowDialogAddMore.toggle()
+                            }
+                            else if self.isOptionsPressed == [false, false, false, false] {
                                 self.alertTypeAddMore = .correctOptionNotChosen
                                 self.isShowDialogAddMore.toggle()
                             }
@@ -320,6 +379,10 @@ struct AddQuizCardCategoryView: View {
                                 return Alert(title: Text("Error"), message: Text("Please check if your device is connected to the network"), dismissButton: .default(Text("Okay")))
                             case .correctOptionNotChosen:
                                 return Alert(title: Text("Error"), message: Text("Please press on the correct option's circle button till it's color changes to green."), dismissButton: .default(Text("Okay")))
+                            case .questionTooLong:
+                                return Alert(title: Text("Error"), message: Text("Your Question seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
+                            case .optionTooLong:
+                                return Alert(title: Text("Error"), message: Text("One or many of your option seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
                             }
                         }
                         
@@ -328,61 +391,78 @@ struct AddQuizCardCategoryView: View {
                             //Save all the added Quiz cards
                             if !self.monitor.isConnected {
                                 self.alertTypeSave = .connectionError
+                                self.shouldSave = false
                                 self.isDialogSave.toggle()
                             }
                             else if self.isNewCat && model.quizCardCategory.title.isEmpty {
                                 self.alertTypeSave = .categoryTitleEmpty
-                                self.isDialogSave.toggle()
-                            }else if quizCards.isEmpty {
-                                //There are no flash cards to save
-                                self.alertTypeSave = .quizCardsEmpty
+                                self.shouldSave = false
                                 self.isDialogSave.toggle()
                             }
                             
-                            //Student is adding new quiz card cat
-                            if isNewCat {
-                                self.isLoading.toggle()
-                                model.quizCardCategory.id = UUID().uuidString
-                                model.quizCardCategory.quizCardCatId = model.quizCardCategory.id!
-                                model.quizCardCategory.image = self.randomImages.randomElement()!
-                                model.quizCardCategory.quizCards = self.quizCards
+                            //Check if student added any card before saving
+                            else if !quizCard.question.isEmpty ||
+                                        !quizOption[0].option.isEmpty || !quizOption[1].option.isEmpty ||
+                                        !quizOption[2].option.isEmpty || !quizOption[3].option.isEmpty {
                                 
-                                model.saveQuizCategory(quizCardCategory: model.quizCardCategory, studentUID: studentUID!) { error in
-                                    self.isLoading.toggle()
-                                    errorMessage = error?.localizedDescription ?? ""
+                                //Recheck all the details
+                                if quizCard.question.isEmpty ||
+                                    quizOption[0].option == "" || quizOption[1].option == "" ||
+                                    quizOption[2].option == "" || quizOption[3].option == ""{
+                                    self.alertTypeAddMore = .quizCardDetailsEmpty
+                                    self.shouldSave = false
+                                    self.isShowDialogAddMore.toggle()
                                     
-                                    if errorMessage == "" {
-                                        //Category was added
-                                        self.alertTypeSave = .success
-                                        self.isDialogSave.toggle()
-                                    }else{
-                                        //Error occurred while trying to save the category
-                                        self.alertTypeSave = .otherError
-                                        self.isDialogSave.toggle()
-                                    }
-                                }
-
-                            }
-                            // Student is adding quiz card in existing category
-                            else{
-                                self.isLoading.toggle()
-                                model.saveQuizCardInExistingCategory(quizCardCategoryID: self.quizCardCatID, quizCards: self.quizCards, studentUID: studentUID!) { error in
-                                    errorMessage = error?.localizedDescription ?? ""
+                                }else if quizCard.question.count > self.quizCardQuestionLimit {
+                                    self.alertTypeAddMore = .questionTooLong
+                                    self.shouldSave = false
+                                    self.isShowDialogAddMore.toggle()
                                     
-                                    if errorMessage == "" {
-                                        //Category was added
-                                        self.alertTypeSave = .success
-                                        self.isDialogSave.toggle()
-                                    }else{
-                                        //Error occurred while trying to save the category
-                                        self.alertTypeSave = .otherError
-                                        self.isDialogSave.toggle()
-                                    }
+                                }else if quizOption[0].option.count > self.quizCardOptionLimit ||
+                                            quizOption[1].option.count > self.quizCardOptionLimit ||
+                                            quizOption[2].option.count > self.quizCardOptionLimit ||
+                                            quizOption[3].option.count > self.quizCardOptionLimit{
+                                    
+                                    self.alertTypeAddMore = .optionTooLong
+                                    self.shouldSave = false
+                                    self.isShowDialogAddMore.toggle()
                                 }
-                            }
                                 
-
-
+                                else if self.isOptionsPressed == [false, false, false, false] {
+                                    self.alertTypeAddMore = .correctOptionNotChosen
+                                    self.shouldSave = false
+                                    self.isShowDialogAddMore.toggle()
+                                }
+                                
+                                else{
+                                    //Add an Id to the quiz card
+                                    quizCard.id = UUID().uuidString
+                                    quizCard.quizCardId = quizCard.id
+                                    //Add the options to the quiz card
+                                    quizCard.options = quizOption
+                                    //Get the index of the correct option
+                                    quizCard.correctOption = String(self.isOptionsPressed.firstIndex(of: true)!)
+                                    //Add the quiz card to the array
+                                    quizCards.append(quizCard)
+                                    //Clear all the fields for new quiz card
+                                    resetQuizCard()
+                                    self.shouldSave = true
+                                    
+                                }
+                                
+                            }
+                            else if quizCards.isEmpty {
+                                //There are no flash cards to save
+                                self.alertTypeSave = .quizCardsEmpty
+                                self.shouldSave = false
+                                self.isDialogSave.toggle()
+                            }
+                            
+                            //Save only if all details are checked
+                            if self.shouldSave {
+                                self.saveQuizCardCategory()
+                            }
+                            
                             
                         }, label: {
                             Text("Save").font(Font.custom("Noteworthy", size: 20).bold())
@@ -408,6 +488,12 @@ struct AddQuizCardCategoryView: View {
                                 return Alert(title: Text("Success"), message: Text("Quiz Card Category was added successfully"), dismissButton: .default(Text("Okay")) {
                                     self.mode.wrappedValue.dismiss()
                                 })
+                            case .quizCardDetailsEmpty:
+                                return Alert(title: Text("Error"), message: Text("Quiz card details must not be left empty"), dismissButton: .default(Text("Okay")))
+                            case .questionTooLong:
+                                return Alert(title: Text("Error"), message: Text("Your Question seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
+                            case .optionTooLong:
+                                return Alert(title: Text("Error"), message: Text("One or many of your option seems to be too long. Please shorten it."), dismissButton: .default(Text("Okay")))
                             }
                         }
                     }

@@ -10,18 +10,14 @@ import FirebaseFirestore
 
 class QuizCardCategories: ObservableObject {
     @Published var quizCardCategories: [QuizCardCategory] = [QuizCardCategory]()
-    
-//    [QuizCardCategory(id: UUID().uuidString, title: "CP264", image: "moonBuilding"),
-//     QuizCardCategory(id: UUID().uuidString, title: "CP216", image: "tallBuilding"),
-//     QuizCardCategory(id: UUID().uuidString, title: "CP214", image: "torontoBuilding"),
-//     QuizCardCategory(id: UUID().uuidString, title: "CP164", image: "foggyBuilding")]
-    
     private var db = Firestore.firestore()
+    private var listener: ListenerRegistration?
+    
     
     /// Fetches all the quiz card categories
     /// - Parameter studentUID: UID of the student
     func fetchData(studentUID: String) {
-        db.collection("students").document(studentUID).collection("quizCardCategories").addSnapshotListener {(querySnapshot, error) in
+        listener = db.collection("students").document(studentUID).collection("quizCardCategories").addSnapshotListener {(querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("There were no quiz card categories")
                 return
@@ -30,6 +26,13 @@ class QuizCardCategories: ObservableObject {
             self.quizCardCategories = documents.compactMap{(queryDocumentSnapshot) -> QuizCardCategory? in
                 return try? queryDocumentSnapshot.data(as: QuizCardCategory.self)
             }
+        }
+    }
+    
+    /// Detach the listener when you dont need real time updates
+    func detachListenerForQuizCardCategories() {
+        if let listenerRegistration = listener {
+            listenerRegistration.remove()
         }
     }
 

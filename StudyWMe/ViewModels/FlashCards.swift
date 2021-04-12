@@ -15,6 +15,10 @@ class FlashCards: ObservableObject {
     private var db = Firestore.firestore()
     private var listener: ListenerRegistration?
     
+    /// Fetches all the flash cards in a category
+    /// - Parameters:
+    ///   - studentUID: UID of the student
+    ///   - flashCardCategoryId: Flash card category ID where the flash cards need to be fetched from
     func fetchFlashCardsData(studentUID: String, flashCardCategoryId: String) {
         listener = db.collection("students").document(studentUID)
             .collection("flashCardCategories").document(flashCardCategoryId)
@@ -34,6 +38,7 @@ class FlashCards: ObservableObject {
         }
     }
     
+    /// Detaches the listener for efficiency
     func detachFlashCardsDataListener() {
         if let listenerRegistration = listener {
             listenerRegistration.remove()
