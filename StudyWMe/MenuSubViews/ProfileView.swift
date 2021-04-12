@@ -67,14 +67,15 @@ struct ProfileView: View {
                                 .clipShape(Capsule())
                         }
                         .background(GeometryGetter(rect: $kGuardian.rects[0]))
+                        .onTapGesture {
+                            self.tryintoEditEmail.toggle()
+                        }
+                        .alert(isPresented: $tryintoEditEmail) {
+                            return Alert(title: Text("Note"), message: Text("Cannot edit email field. As of now it's for viewing purposes only."), dismissButton: .default(Text("Okay")))
+                        }
                         
                     }.padding(.top, (UIScreen.main.bounds.height * 0.5) - 430)
-                    .onTapGesture {
-                        self.tryintoEditEmail.toggle()
-                    }
-                    .alert(isPresented: $tryintoEditEmail) {
-                        return Alert(title: Text("Error"), message: Text("Cannot edit email field. As of now it's for viewing purposes only."), dismissButton: .default(Text("Okay")))
-                    }
+
                     
                     Button(action: {
                         //Check for validation

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import FirebaseFirestore
 
 struct SignUpView: View {
     @StateObject var model: SignUpModel = SignUpModel()
@@ -88,35 +89,6 @@ struct SignUpView: View {
                                 }
                                 
                             }
-                            
-                            
-//                            Auth.auth().createUser(withEmail: model.emailSignUp, password: model.passwordSignUp){ result, error in
-//                                withAnimation{
-//                                    self.isLogin.toggle()
-//                                }
-//                                dialogErrorMessage = error?.localizedDescription ?? ""
-//
-//                                //Account was created successfully
-//                                if dialogErrorMessage == ""{
-//                                    //Send Verification Email
-//                                    result?.user.sendEmailVerification(completion: { (error) in
-//                                        dialogErrorMessage = error?.localizedDescription ?? ""
-//                                        //Email verification was sent successfully
-//                                        if dialogErrorMessage == ""{
-//                                            self.dialogSuccessMessage = "Your account was created successfully. Please verify your email and login to your account."
-//                                            alertDialogType = .success
-//                                            self.showAlertDialog.toggle()
-//                                        }else{
-//                                            alertDialogType = .error
-//                                            self.showAlertDialog.toggle()
-//                                        }
-//
-//                                    })
-//                                }else{
-//                                    alertDialogType = .error
-//                                    self.showAlertDialog.toggle()
-//                                }
-//                            }
                         }
                     }, label: {
                         Text("Sign Up").font(Font.custom("Noteworthy", size: 20).bold())

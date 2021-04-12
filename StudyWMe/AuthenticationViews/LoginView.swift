@@ -82,39 +82,6 @@ struct LoginView: View {
                                     }
                                 }
                                 
-                                
-//                                Auth.auth().signIn(withEmail: model.emailLogin, password: model.passwordLogin) { (result, error) in
-//
-//                                    print("Error login: \(error?.localizedDescription ?? "No Error")")
-//                                    errorMessage = error?.localizedDescription ?? ""
-//
-//                                    //Stop the loading view
-//                                    withAnimation{
-//                                        self.isLoading.toggle()
-//                                    }
-//
-//                                    //No error in login
-//                                    if errorMessage == ""{
-//                                        let user = result?.user
-//
-//                                        //User did not verify email id
-//                                        if !user!.isEmailVerified{
-//                                            errorMessage = "Please verify your email before logging in"
-//                                            showAlertDialog.toggle()
-//                                            self.userStatus = false
-//                                            try! Auth.auth().signOut()
-//                                        }else{
-//                                            //Set user state as logged in
-//                                            withAnimation{
-//                                                self.userStatus = true
-//                                            }
-//                                            print("User logged in")
-//                                        }
-//
-//                                    }else{
-//                                        showAlertDialog.toggle()
-//                                    }
-//                                }
                             }
                                 }, label: {
                             Text("Login").font(Font.custom("Noteworthy", size: 20).bold())

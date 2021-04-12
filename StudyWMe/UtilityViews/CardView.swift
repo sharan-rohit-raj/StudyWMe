@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 
+/// A view that displays card for flash card category and quiz card category
 struct CardView: View {
     @State var title:String
     @State var image:String
