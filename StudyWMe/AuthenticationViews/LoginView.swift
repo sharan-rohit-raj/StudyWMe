@@ -110,17 +110,6 @@ struct LoginView: View {
                                     .foregroundColor(Color("DarkPurple"))
                         }
                         
-    //                    //Set up the action to navigate to Sign up page
-    //                    NavigationLink(destination: SignUpView(model: model)){
-    //                            Text("Sign up here")
-    //                                .foregroundColor(Color("DarkPurple"))
-    //                    }
-                        
-                        
-    //                    NavigationLink(destination: SignUpView(model: model)){
-    //                            Text("Sign up here")
-    //                                .foregroundColor(Color("DarkPurple"))
-    //                    }
                         
                     }.padding(.top)
                     
@@ -130,12 +119,7 @@ struct LoginView: View {
                                 .padding(.top)
                     }
                     
-    //                //Set up the action to navigate to Sign up page
-    //                NavigationLink(destination: ForgotPasswordView(model: model)){
-    //                        Text("Forgot Password?")
-    //                            .foregroundColor(Color("DarkPurple"))
-    //                            .padding(.top)
-    //                }
+
 
 
                 }//VStack

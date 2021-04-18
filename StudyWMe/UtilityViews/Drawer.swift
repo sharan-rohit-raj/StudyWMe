@@ -73,7 +73,7 @@ struct Drawer: View {
             //Menu Buttons
             VStack(spacing: 45){
                 MenuButtons(name: "Home", image: "house.fill", selectedMenu: $menuModel.selectedMenu, animation: animation)
-                MenuButtons(name: "Profile",image: "person.crop.circle", selectedMenu: $menuModel.selectedMenu, animation: animation)
+                MenuButtons(name: "Account",image: "person.crop.circle", selectedMenu: $menuModel.selectedMenu, animation: animation)
                 MenuButtons(name: "Feedback",image: "envelope.fill", selectedMenu: $menuModel.selectedMenu, animation: animation)
                 MenuButtons(name: "About Us",image: "info.circle.fill", selectedMenu: $menuModel.selectedMenu, animation: animation)
             }

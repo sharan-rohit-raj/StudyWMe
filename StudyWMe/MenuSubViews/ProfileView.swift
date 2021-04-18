@@ -19,6 +19,7 @@ struct ProfileView: View {
     @State var isLoading = false
     @ObservedObject var monitor = NetworkMonitor()
     @State var tryintoEditEmail: Bool = false
+    @State var isDeleteSheetPresented = false
     
     enum AlertType {
         case emptyField, invalidPhoneNumber, noNetwork, errorOccured, successSave, displayNameUpdateError
@@ -32,7 +33,7 @@ struct ProfileView: View {
             ZStack {
                 VStack {
                     VStack(spacing: 30) {
-                        Text("Profile")
+                        Text("Account")
                             .font(Font.custom("Noteworthy", size: 35).bold())
                             .foregroundColor(Color("DarkPurple"))
                             .frame(width: UIScreen.main.bounds.width , height: 150, alignment: .bottomLeading)
@@ -44,37 +45,70 @@ struct ProfileView: View {
                             .offset(x: 15, y: 0)
                     }
                 
-                    VStack(spacing: 50) {
-                        CustomTextField(image: "person.fill", placeholderValue: "First Name", text: $model.firstName)
-                            .autocapitalization(UITextAutocapitalizationType.words)
-                        CustomTextField(image: "person.fill", placeholderValue: "Last Name", text: $model.lastName)
-                            .autocapitalization(UITextAutocapitalizationType.words)
-                        CustomTextField(image: "phone.fill", placeholderValue: "Phone Number", text: $model.phoneNumber)
-                            .autocapitalization(UITextAutocapitalizationType.words)
-                        ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)){
-                            Image(systemName: "envelope.fill")
-                                .resizable()
-                                .frame(width:30, height: 30)
+                    VStack(spacing: 35) {
+                        VStack{
+                            Text("First name")
+                                .font(Font.custom("Noteworthy", size: 25))
                                 .foregroundColor(Color("DarkPurple"))
-                                .padding(.leading)
-                            ZStack{
-                                Text(emailID)
-                            }
-                            .padding(.horizontal)
-                            .frame(width: UIScreen.main.bounds.width * 0.97, height: 60)
-                            .foregroundColor(Color("DarkPurple"))
-                            .background(Color("LightPurple").opacity(0.175))
-                                .clipShape(Capsule())
-                        }
-                        .background(GeometryGetter(rect: $kGuardian.rects[0]))
-                        .onTapGesture {
-                            self.tryintoEditEmail.toggle()
-                        }
-                        .alert(isPresented: $tryintoEditEmail) {
-                            return Alert(title: Text("Note"), message: Text("Cannot edit email field. As of now it's for viewing purposes only."), dismissButton: .default(Text("Okay")))
+                                .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .leading)
+                                .padding(.bottom)
+                            CustomTextField(image: "person.fill", placeholderValue: "First Name", text: $model.firstName)
+                                .autocapitalization(UITextAutocapitalizationType.words)
                         }
                         
-                    }.padding(.top, (UIScreen.main.bounds.height * 0.5) - 430)
+                        VStack{
+                            Text("Last name")
+                                .font(Font.custom("Noteworthy", size: 25))
+                                .foregroundColor(Color("DarkPurple"))
+                                .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .leading)
+                                .padding(.bottom)
+                            CustomTextField(image: "person.fill", placeholderValue: "Last Name", text: $model.lastName)
+                                .autocapitalization(UITextAutocapitalizationType.words)
+                        }
+                        VStack{
+                            Text("Phone number")
+                                .font(Font.custom("Noteworthy", size: 25))
+                                .foregroundColor(Color("DarkPurple"))
+                                .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .leading)
+                                .padding(.bottom)
+                            CustomTextField(image: "phone.fill", placeholderValue: "Phone Number", text: $model.phoneNumber)
+                                .autocapitalization(UITextAutocapitalizationType.words)
+                        }
+                        VStack{
+                            Text("Email ID")
+                                .font(Font.custom("Noteworthy", size: 25))
+                                .foregroundColor(Color("DarkPurple"))
+                                .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .leading)
+                                .padding(.bottom)
+                            
+                            ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)){
+                                Image(systemName: "envelope.fill")
+                                    .resizable()
+                                    .frame(width:30, height: 30)
+                                    .foregroundColor(Color("DarkPurple"))
+                                    .padding(.leading)
+                                ZStack{
+                                    Text(emailID)
+                                }
+                                .padding(.horizontal)
+                                .frame(width: UIScreen.main.bounds.width * 0.97, height: 60)
+                                .foregroundColor(Color("DarkPurple"))
+                                .background(Color("LightPurple").opacity(0.175))
+                                    .clipShape(Capsule())
+                            }
+                            .background(GeometryGetter(rect: $kGuardian.rects[0]))
+                            .onTapGesture {
+                                self.tryintoEditEmail.toggle()
+                            }
+                            .alert(isPresented: $tryintoEditEmail) {
+                                return Alert(title: Text("Note"), message: Text("Cannot edit email field. As of now it's for viewing purposes only."), dismissButton: .default(Text("Okay")))
+                            }
+                        }
+
+
+
+                        
+                    }.padding(.top, (UIScreen.main.bounds.height * 0.5) - 540)
 
                     
                     Button(action: {
@@ -130,7 +164,7 @@ struct ProfileView: View {
                             .background(Color("DarkPurple"))
                             .clipShape(Capsule())
                     })
-                    .padding(.top, UIScreen.main.bounds.height * 0.1)
+                    .padding(.top, 45)
                     .alert(isPresented: $showAlert) {
                         switch(alertType) {
                         case .emptyField:
@@ -146,6 +180,17 @@ struct ProfileView: View {
                         case .displayNameUpdateError:
                             return Alert(title: Text("Error"), message: Text(displayNameError), dismissButton: .default(Text("Okay")))
                         }
+                    }
+                    
+                    Button(action: {
+                        self.isDeleteSheetPresented.toggle()
+                    }, label: {
+                        Text("Delete account").font(Font.custom("Noteworthy", size: 20).bold())
+                            .foregroundColor(Color("DarkPurple"))
+                    })
+                    .padding(.top, 10)
+                    .sheet(isPresented: $isDeleteSheetPresented) {
+                        DeleteAccountView()
                     }
                     
                     Spacer()

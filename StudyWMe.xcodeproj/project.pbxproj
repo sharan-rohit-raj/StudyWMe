@@ -46,6 +46,8 @@
 		43A05F6D25FC631100AA5073 /* StudyWMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F6C25FC631100AA5073 /* StudyWMeTests.swift */; };
 		43A05F7825FC631100AA5073 /* StudyWMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A05F7725FC631100AA5073 /* StudyWMeUITests.swift */; };
 		43B448752623D6F100A5BF4E /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B448742623D6F100A5BF4E /* MailView.swift */; };
+		43C609A3262BC5A400349599 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C609A2262BC5A400349599 /* DeleteAccountViewModel.swift */; };
+		43C609AB262BC5C100349599 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C609AA262BC5C000349599 /* DeleteAccountView.swift */; };
 		43C844F7260D6CCD001957F8 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C844F6260D6CCD001957F8 /* LoaderView.swift */; };
 		43C844FC260D6E79001957F8 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C844FB260D6E79001957F8 /* LoginModel.swift */; };
 		43C84501260D6F6F001957F8 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C84500260D6F6F001957F8 /* SignUpModel.swift */; };
@@ -132,6 +134,8 @@
 		43A05F7925FC631100AA5073 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43AF960DB7106E54AA1EF69E /* Pods-StudyWMe-StudyWMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyWMe-StudyWMeUITests.release.xcconfig"; path = "Target Support Files/Pods-StudyWMe-StudyWMeUITests/Pods-StudyWMe-StudyWMeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43B448742623D6F100A5BF4E /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
+		43C609A2262BC5A400349599 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
+		43C609AA262BC5C000349599 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		43C844F6260D6CCD001957F8 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		43C844FB260D6E79001957F8 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		43C84500260D6F6F001957F8 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				432E467C260191320063D020 /* LoginView.swift */,
 				432E4686260191F30063D020 /* SignUpView.swift */,
 				432E468B260192330063D020 /* ForgotPasswordView.swift */,
+				43C609AA262BC5C000349599 /* DeleteAccountView.swift */,
 			);
 			path = AuthenticationViews;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 				4392838E261E990A00804CCE /* QuizCardCategories.swift */,
 				4314379D26215202004D6635 /* FlashCards.swift */,
 				431437A226215CC4004D6635 /* QuizCards.swift */,
+				43C609A2262BC5A400349599 /* DeleteAccountViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -634,6 +640,7 @@
 				430B80B02612F76300FF8B40 /* NavigationCustomizer.swift in Sources */,
 				43C844FC260D6E79001957F8 /* LoginModel.swift in Sources */,
 				43155BE4261AAC7B004ACD5F /* AQuizCard.swift in Sources */,
+				43C609AB262BC5C100349599 /* DeleteAccountView.swift in Sources */,
 				43C8452F260D95EC001957F8 /* MenuModel.swift in Sources */,
 				43C844F7260D6CCD001957F8 /* LoaderView.swift in Sources */,
 				43C84520260D8D35001957F8 /* MainView.swift in Sources */,
@@ -649,6 +656,7 @@
 				432E467D260191320063D020 /* LoginView.swift in Sources */,
 				432E46AD2601A4160063D020 /* CustomTextField.swift in Sources */,
 				4390F73026192F610001D875 /* VisualEffectBlur.swift in Sources */,
+				43C609A3262BC5A400349599 /* DeleteAccountViewModel.swift in Sources */,
 				435866E826119711001E3661 /* FeedbackModel.swift in Sources */,
 				43C84506260D6F97001957F8 /* ForgotPasswordModel.swift in Sources */,
 				43A05F5A25FC630F00AA5073 /* ContentView.swift in Sources */,

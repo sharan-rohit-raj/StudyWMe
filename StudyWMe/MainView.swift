@@ -33,7 +33,7 @@ struct MainView: View {
                             FlashQuizView(flashCardsCategories: flashCardsCategories, quizCardCategoriesModel: quizCardCategoriesModel )
                                 .tag("Home")
                             ProfileView(model: self.profileModel)
-                                .tag("Profile")
+                                .tag("Account")
                             FeedbackView()
                                 .tag("Feedback")
                             AboutUsView()

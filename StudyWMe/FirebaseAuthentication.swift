@@ -56,6 +56,15 @@ class FirebaseAuthentication: ObservableObject{
             return false
         }
     }
+    //MARK:- Reauthenticate account functionality
+    func reAuthenticate(email: String, password: String, handler: @escaping AuthDataResultCallback ) {
+        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: email, password: password)
+        Auth.auth().currentUser?.reauthenticate(with: credential, completion: handler)
+    }
+    //MARK:- Delete account funcionality
+    func deleteAccount(handler: @escaping ApplyActionCodeCallback ) {
+        Auth.auth().currentUser?.delete(completion: handler)
+    }
     //MARK:- Detach the listener
     func unbind(){
         if let handle = handle{
