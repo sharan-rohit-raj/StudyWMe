@@ -32,18 +32,13 @@ struct ProfileView: View {
         NavigationView{
             ZStack {
                 VStack {
-                    VStack(spacing: 30) {
+//                    VStack(spacing: 30) {
                         Text("Account")
                             .font(Font.custom("Noteworthy", size: 35).bold())
                             .foregroundColor(Color("DarkPurple"))
                             .frame(width: UIScreen.main.bounds.width , height: 150, alignment: .bottomLeading)
                             .offset(x: 15, y: 0)
-                        Text("Here's little something about you. Feel free to edit.")
-                            .font(Font.custom("Noteworthy", size: 25).bold())
-                            .foregroundColor(Color("DarkPurple"))
-                            .frame(width: UIScreen.main.bounds.width , alignment: .bottomLeading)
-                            .offset(x: 15, y: 0)
-                    }
+                            .padding(.bottom, 50)
                 
                     VStack(spacing: 35) {
                         VStack{
@@ -51,7 +46,6 @@ struct ProfileView: View {
                                 .font(Font.custom("Noteworthy", size: 25))
                                 .foregroundColor(Color("DarkPurple"))
                                 .frame(width: UIScreen.main.bounds.width * 0.9, alignment: .leading)
-                                .padding(.bottom)
                             CustomTextField(image: "person.fill", placeholderValue: "First Name", text: $model.firstName)
                                 .autocapitalization(UITextAutocapitalizationType.words)
                         }
